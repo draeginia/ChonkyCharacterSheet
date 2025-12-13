@@ -26,7 +26,6 @@ function CCS.GetFontKeyByPath(path)
     return nil
 end
 
-
 -- All of this tooltip code because blizzard needs to control GameTooltip and causes secret issues if a tooltip displays money... Frickin glorious...
 function CCS:CreateTooltip(name)
     local tooltip = _G[name] or CreateFrame("GameTooltip", name, UIParent, "TooltipBackdropTemplate")
@@ -1018,14 +1017,14 @@ function CCS:InitSavedVariables()
 
     local charKey = CCS:GetProfileName()
     local localeFontPath = CCS:GetDefaultFontForLocale()
-    
+
     -- Always point CurrentProfile to the saved profile
     CCS.CurrentProfile = ChonkyCharacterSheetDB.profiles[charKey]
     if not CCS.CurrentProfile then
         CCS.CurrentProfile = {}
         ChonkyCharacterSheetDB.profiles[charKey] = CCS.CurrentProfile
     end
-
+    
     local savedProfile = CCS.CurrentProfile
 
     for _, def in ipairs(ns.optionDefs or {}) do
@@ -1044,6 +1043,7 @@ function CCS:InitSavedVariables()
                     end
                 end
             else
+
                 -- Explicitly respect false values
                 if saved == nil then
                     if def.type == "font" and localeFontPath then
@@ -1055,7 +1055,6 @@ function CCS:InitSavedVariables()
                     savedProfile[def.key] = saved
                 end
             end
-
         end
     end
 end
@@ -1809,10 +1808,18 @@ function CCS.updateLocationInfo(unit, slotIndex, framename)
 
     -- Positioning and font setup
     nameTxt:SetPoint(SubElementSetPoint, _G[slotFrameName], SubElementSetPoint2, 10 * neg, 13)
-    nameTxt:SetFont(option("fontname_iname"..suffix) or CCS.fontname, option("fontsize_iname"..suffix) or 12, "OUTLINE")
+    nameTxt:SetFont(option("fontname_iname"..suffix) or CCS.fontname, option("fontsize_iname"..suffix) or 12, CCS.textoutline)
+    if option("showfontshadow") == true then
+        nameTxt:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+        nameTxt:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+    end	                    
 
     ilvlTxt:SetPoint(SubElementSetPoint, _G[slotFrameName], SubElementSetPoint2, 10 * neg, 0)
-    ilvlTxt:SetFont(option("fontname_iilvl"..suffix) or CCS.fontname, option("fontsize_iilvl"..suffix) or 10, "OUTLINE")
+    ilvlTxt:SetFont(option("fontname_iilvl"..suffix) or CCS.fontname, option("fontsize_iilvl"..suffix) or 10, CCS.textoutline)
+    if option("showfontshadow") == true then
+        ilvlTxt:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+        ilvlTxt:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+    end	                
     ilvlTxt:SetTextColor(
         option("fontcolor_iilvl"..suffix)[1] or 1,
         option("fontcolor_iilvl"..suffix)[2] or 1,
@@ -1821,7 +1828,11 @@ function CCS.updateLocationInfo(unit, slotIndex, framename)
     )
 
     enchantTxt:SetPoint(SubElementSetPoint, _G[slotFrameName], SubElementSetPoint2, 10 * neg, -13)
-    enchantTxt:SetFont(option("fontname_enchant"..suffix) or CCS.fontname, option("fontsize_enchant"..suffix) or 10, "OUTLINE")
+    enchantTxt:SetFont(option("fontname_enchant"..suffix) or CCS.fontname, option("fontsize_enchant"..suffix) or 10, CCS.textoutline)
+    if option("showfontshadow") == true then
+        enchantTxt:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+        enchantTxt:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+    end	            
     enchantTxt:SetTextColor(
         option("fontcolor_enchant"..suffix)[1] or 1,
         option("fontcolor_enchant"..suffix)[2] or 1,
@@ -1833,6 +1844,10 @@ function CCS.updateLocationInfo(unit, slotIndex, framename)
     if isPlayer and durabilityTxt then
         durabilityTxt:SetPoint("CENTER", _G[slotFrameName], "CENTER", 0, 0)
         durabilityTxt:SetFont(option("fontname_durability") or CCS.fontname, option("fontsize_durability") or 10, CCS.textoutline)
+        if option("showfontshadow") == true then
+            durabilityTxt:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+            durabilityTxt:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+        end	        
     end
 
     bgfader:SetSize(240, 39) -- fader size (scales with the character frame)
@@ -1892,6 +1907,7 @@ function CCS.updateLocationInfo(unit, slotIndex, framename)
         local SocketCount = 0;
         local Enchant = ""
         local ItemUpgradeLevel = ""
+        local ItemUpgradeTrack = ""
         
         ItemTip:SetOwner(WorldFrame, 'ANCHOR_NONE');
         ItemTip:ClearLines()
@@ -1927,15 +1943,19 @@ function CCS.updateLocationInfo(unit, slotIndex, framename)
                     end
                     
                     -- Empty socket
-                    
                     if text:match(EMPTY_SOCKET_PRISMATIC) then
                         EmptySocket = true
                         SocketCount = SocketCount + 1
                     end
                     
                     -- Upgrade level (track + current/max)
-                    local track, current, max = text:match(": (.+)%s+(%d+)%s*/%s*(%d+)")
+                    local track, current, max = text:match(ITEM_UPGRADE_FRAME_CURRENT_UPGRADE_FORMAT_STRING:gsub("%%s","(.+)"):gsub("%%d","(%%d+)"))
+                    if track == nil or current == nil or max == nil then -- This is mostly for the ruRU locale
+                      track, current, max = text:match(": (.+)%s+(%d+)%s*/%s*(%d+)")
+                    end
+
                     if current and max then
+                        ItemUpgradeTrack = track
                         ItemUpgradeLevel = track .. " " .. current .. "/" .. max
                     end
                 end
@@ -1977,6 +1997,11 @@ function CCS.updateLocationInfo(unit, slotIndex, framename)
             if option("showitemupgrade"..suffix) then 
                 if string.len(ItemUpgradeLevel) > 0 then
                     local upr, upg, upb, upalpha = option("itemupgradecolor"..suffix)[1], option("itemupgradecolor"..suffix)[2], option("itemupgradecolor"..suffix)[3], option("itemupgradecolor"..suffix)[4];
+
+                    if option("upgradecolorrarity") == true and CCS.UpgradeTrackNames[locale] and CCS.UpgradeTrackNames[locale][ItemUpgradeTrack] then
+                        upr, upg, upb, upalpha = unpack(CCS.UpgradeTrackNames[locale][ItemUpgradeTrack])
+                    end
+                    
                     ItemUpgradeLevel = WrapTextInColor("(" .. ItemUpgradeLevel .. ")", CreateColor(upr, upg, upb, upalpha))
                 end
             else
@@ -2088,7 +2113,19 @@ function CCS.updateLocationInfo(unit, slotIndex, framename)
                 end
             end
             
-                        -- detect trailing icon escape (|A...|a or |T...|t)
+            -- Compatibility shim for UTF-8 substring
+            local function SafeUtf8Sub(str, i, j)
+                if utf8 and utf8.sub then
+                    return utf8.sub(str, i, j)
+                elseif string.utf8sub then
+                    return string.utf8sub(str, i, j)
+                else
+                    -- Fallback: plain Lua substring (safe if no multibyte chars)
+                    return string.sub(str, i, j)
+                end
+            end
+
+            -- detect trailing icon escape (|A...|a or |T...|t)
             local enchantlen = option("enchantnamelength") or 100
             local ellipsis = "..."
             local iconStart = Enchant:match(".*()|[AT].-|[at]$")
@@ -2097,11 +2134,11 @@ function CCS.updateLocationInfo(unit, slotIndex, framename)
                 local textPart = Enchant:sub(1, iconStart-1)
                 local iconPart = Enchant:sub(iconStart)
                 if strlen(textPart) > enchantlen - strlen(ellipsis) then
-                    textPart = string.utf8sub(textPart, 1, enchantlen - strlen(ellipsis)) .. ellipsis
+                    textPart = SafeUtf8Sub(textPart, 1, enchantlen - strlen(ellipsis)) .. ellipsis
                 end
                 Enchant = textPart .. iconPart
             elseif strlen(Enchant) > enchantlen then
-                Enchant = string.utf8sub(Enchant, 1, enchantlen - strlen(ellipsis)) .. ellipsis
+                Enchant = SafeUtf8Sub(Enchant, 1, enchantlen - strlen(ellipsis)) .. ellipsis
             end
 
             enchantTxt:SetText(Enchant)

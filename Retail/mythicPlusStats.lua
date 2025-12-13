@@ -457,7 +457,7 @@ local function updatesideframe()
 	
 	_G["ccsm_sf"]:SetScale(option("mplus_sp_scale"))
 	
-	if C_WeeklyRewards.HasAvailableRewards() then _G["ccsm_fs4"]:Show() else _G["ccsm_fs4"]:Hide() end
+	if C_WeeklyRewards.HasAvailableRewards() and _G["ccsm_fs4"] ~= nil then _G["ccsm_fs4"]:Show() else _G["ccsm_fs4"]:Hide() end
 	
 	local ccsm_fs1 = _G["ccsm_fs1"]
 
@@ -687,6 +687,11 @@ local function CreateRewardFrame(name, anchorPoint, anchorFrame, relativePoint, 
     fs1:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -8, -7)
     fs1:SetSize(165, 20)
     fs1:SetFont(option("fontname_wc_obj") or CCS.fontname, option("fontsize_wc_obj") or 10, CCS.textoutline)
+	if option("showfontshadow") == true then
+		fs1:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		fs1:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	                                                                
+	
     fs1:SetJustifyH("LEFT")
 	local fs1c = option("fontcolor_wc_obj_incomplete") or {}
     fs1:SetText(format(WEEKLY_REWARDS_THRESHOLD_DUNGEONS, 4))
@@ -697,6 +702,11 @@ local function CreateRewardFrame(name, anchorPoint, anchorFrame, relativePoint, 
     local fs2 = _G[name.."_fs2"] or frame:CreateFontString(name.."_fs2")
     fs2:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 28, 16)
     fs2:SetFont(option("fontname_wc_ilvl") or CCS.fontname, option("fontsize_wc_ilvl") or 20, CCS.textoutline)
+	if option("showfontshadow") == true then
+		fs2:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		fs2:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	                                                                
+	
 	local fs2c = option("fontcolor_wc_ilvl") or {}
 	fs2:SetTextColor(fs2c[1] or 1, fs2c[2] or 1, fs2c[3] or 1, fs2c[4] or 1)
 
@@ -707,6 +717,11 @@ local function CreateRewardFrame(name, anchorPoint, anchorFrame, relativePoint, 
     local fs3 = _G[name.."_fs3"] or frame:CreateFontString(name.."_fs3")
     fs3:SetPoint("RIGHT", frame, "RIGHT", -12, -6)
     fs3:SetFont(option("fontname_wc_diff") or CCS.fontname, option("fontsize_wc_diff") or 10, CCS.textoutline)
+	if option("showfontshadow") == true then
+		fs3:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		fs3:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	                                                                
+	
 	local fs3c = option("fontcolor_wc_diff_complete") or {}
 	fs3:SetTextColor(fs3c[1] or 0.12, fs3c[2] or 1, fs3c[3] or 0, fs3c[4] or 1)
     fs3:SetJustifyH("RIGHT")
@@ -718,6 +733,11 @@ local function CreateRewardFrame(name, anchorPoint, anchorFrame, relativePoint, 
     local fs4 = _G[name.."_fs4"] or frame:CreateFontString(name.."_fs4")
     fs4:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -12, 6)
     fs4:SetFont(option("fontname_wc_prog") or CCS.fontname, option("fontsize_wc_prog") or 10, CCS.textoutline)
+	if option("showfontshadow") == true then
+		fs4:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		fs4:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	                                                                
+	
 	local fs4c = option("fontcolor_wc_prog_incomplete") or {}
 	fs4:SetTextColor(fs4c[1] or 0.62, fs4c[2] or 0.62, fs4c[3] or 0.62, fs4c[4] or 1)
     fs4:SetJustifyH("RIGHT")
@@ -746,6 +766,11 @@ local function CreateAffixButton(index, anchorFrame, parentFrame)
     local fs = _G[name.."_fs1"] or btn:CreateFontString(name.."_fs1")
     fs:SetPoint("TOP", btn, "BOTTOM", 0, -3)
     fs:SetFont(option("fontname_mplus_affix") or CCS.fontname, option("fontsize_mplus_affix") or 11, CCS.textoutline)
+	if option("showfontshadow") == true then
+		fs:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		fs:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	                                                                
+	
     fs:SetTextColor(
         option("fontcolor_mplus_affix")[1] or 1,
         option("fontcolor_mplus_affix")[2] or 1,
@@ -847,6 +872,11 @@ local function initializeframes()
 	
 	ccsm_fs1:SetPoint("TOPLEFT", sf_topbar, "BOTTOMLEFT", 10 ,-4);
 	ccsm_fs1:SetFont(option("fontname_mplus_key") or CCS.fontname, (option("fontsize_mplus_key") or 11), CCS.textoutline);
+	if option("showfontshadow") == true then
+		ccsm_fs1:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ccsm_fs1:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	                                                                
+	
 	ccsm_fs1:SetJustifyH("LEFT")
 	ccsm_fs1:SetText("")
 	ccsm_fs1:Show()
@@ -854,6 +884,11 @@ local function initializeframes()
 	local ccsm_fs2 = _G["ccsm_fs2"] or  ccsm_sf:CreateFontString("ccsm_fs2")
 	ccsm_fs2:SetPoint("TOP", sf_topbar, "BOTTOM", 0, -35);
 	ccsm_fs2:SetFont(option("fontname_mplus_title") or CCS.fontname, (option("fontsize_mplus_title") or 16), CCS.textoutline);
+	if option("showfontshadow") == true then
+		ccsm_fs2:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ccsm_fs2:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	                                                                
+	
 	ccsm_fs2:SetJustifyH("CENTER")
 	ccsm_fs2:SetText(CCS.getraiderioscoreplayer(false))
 	ccsm_fs2:Show()        
@@ -861,6 +896,11 @@ local function initializeframes()
 	local ccsm_fs3 = _G["ccsm_fs3"] or  ccsm_sf:CreateFontString("ccsm_fs3")
 	ccsm_fs3:SetPoint("TOPRIGHT", sf_topbar, "BOTTOMRIGHT", -10, -4);
 	ccsm_fs3:SetFont(option("fontname_mplus_title") or CCS.fontname, (option("fontsize_mplus_title") or 12), CCS.textoutline);
+	if option("showfontshadow") == true then
+		ccsm_fs3:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ccsm_fs3:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	                                                                
+	
 	ccsm_fs3:SetJustifyH("RIGHT")
 	ccsm_fs3:SetText("")
 	ccsm_fs3:Hide()       
@@ -868,6 +908,11 @@ local function initializeframes()
 	local ccsm_fs4 = _G["ccsm_fs4"] or ccsm_sf:CreateFontString("ccsm_fs4")
 	ccsm_fs4:SetPoint("TOP", sf_bottombar, "TOP", 0, 0);
 	ccsm_fs4:SetFont(option("fontname_mplus_header") or CCS.fontname, (option("fontsize_mplus_header") or 11), CCS.textoutline);
+	--[[if option("showfontshadow") == true then
+		ccsm_fs4:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ccsm_fs4:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	--]]                                                                
+	
 	ccsm_fs4:SetJustifyH("CENTER")
 	ccsm_fs4:SetText("|cFFFFFF00" .. WEEKLY_REWARDS_RETURN_TO_CLAIM .. "|r")
 	ccsm_fs4:Show()               
@@ -981,6 +1026,11 @@ local function initializeframes()
 		local ccsm_bx_btn2_fs = _G["ccsm_b"..x.."_btn2_fs"] or ccsm_bx_btn2:CreateFontString("ccsm_b"..x.."_btn2_fs")
 		ccsm_bx_btn2_fs:SetPoint("CENTER", ccsm_bx_btn2, "CENTER",0 ,0);
 		ccsm_bx_btn2_fs:SetFont(CCS.fontname, (option("fontsize") or 10), CCS.textoutline);
+		if option("showfontshadow") == true then
+			ccsm_bx_btn2_fs:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+			ccsm_bx_btn2_fs:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+		end	                                                                
+		
 		ccsm_bx_btn2_fs:SetJustifyH("CENTER")
 		ccsm_bx_btn2_fs:Show()
 		
@@ -993,11 +1043,21 @@ local function initializeframes()
 		local ccsm_bx_fs1 = _G["ccsm_b"..x.."_fs1"] or  ccsm_bx:CreateFontString("ccsm_b"..x.."_fs1") -- Over icon
 		ccsm_bx_fs1:SetPoint("CENTER", ccsm_bx_tex2, "CENTER", 0 ,0)
 		ccsm_bx_fs1:SetFont(option("fontname_mplus_row") or CCS.fontname, (option("fontsize_mplus_row") or 18), CCS.textoutline)
+		if option("showfontshadow") == true then
+			ccsm_bx_fs1:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+			ccsm_bx_fs1:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+		end	                                                                
+		
 		ccsm_bx_fs1:Hide()
 		
 		local ccsm_bx_fs2 = _G["ccsm_b"..x.."_fs2"] or  ccsm_bx:CreateFontString("ccsm_b"..x.."_fs2") -- Dungeon Name
 		ccsm_bx_fs2:SetPoint("LEFT", ccsm_bx_tex2, "RIGHT", 10 ,0);
 		ccsm_bx_fs2:SetFont(option("fontname_mplus_row") or CCS.fontname, (option("fontsize_mplus_row") or 14), CCS.textoutline);
+		if option("showfontshadow") == true then
+			ccsm_bx_fs2:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+			ccsm_bx_fs2:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+		end	                                                                
+		
 		ccsm_bx_fs2:SetSize(250, 45*height)
 		ccsm_bx_fs2:SetJustifyH("LEFT")
 		ccsm_bx_fs2:Show()
@@ -1005,18 +1065,33 @@ local function initializeframes()
 		local ccsm_bx_fs3 = _G["ccsm_b"..x.."_fs3"] or  ccsm_bx:CreateFontString("ccsm_b"..x.."_fs3") -- Level
 		ccsm_bx_fs3:SetPoint("RIGHT", ccsm_bx_tex2, "RIGHT", 325 ,0);
 		ccsm_bx_fs3:SetFont(option("fontname_mplus_row") or CCS.fontname, (option("fontsize_mplus_row") or 14), CCS.textoutline);
+		if option("showfontshadow") == true then
+			ccsm_bx_fs3:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+			ccsm_bx_fs3:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+		end	                                                                
+		
 		ccsm_bx_fs3:SetJustifyH("RIGHT")
 		ccsm_bx_fs3:Show()
 		
 		local ccsm_bx_fs4 = _G["ccsm_b"..x.."_fs4"] or  ccsm_bx:CreateFontString("ccsm_b"..x.."_fs4") -- Rating
 		ccsm_bx_fs4:SetPoint("RIGHT", ccsm_bx_tex2, "RIGHT", 400 ,0);
 		ccsm_bx_fs4:SetFont(option("fontname_mplus_row") or CCS.fontname, (option("fontsize_mplus_row") or 14), CCS.textoutline);
+		if option("showfontshadow") == true then
+			ccsm_bx_fs4:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+			ccsm_bx_fs4:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+		end	                                                                
+		
 		ccsm_bx_fs4:SetJustifyH("RIGHT")
 		ccsm_bx_fs4:Show()
 		
 		local ccsm_bx_fs7 = _G["ccsm_b"..x.."_fs7"] or  ccsm_bx:CreateFontString("ccsm_b"..x.."_fs7") -- Best
 		ccsm_bx_fs7:SetPoint("LEFT", ccsm_bx_tex2, "RIGHT", 435 ,0);
 		ccsm_bx_fs7:SetFont(option("fontname_mplus_row") or CCS.fontname, (option("fontsize_mplus_row") or 14), CCS.textoutline);
+		if option("showfontshadow") == true then
+			ccsm_bx_fs7:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+			ccsm_bx_fs7:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+		end	                                                                
+		
 		ccsm_bx_fs7:SetJustifyH("RIGHT")
 		ccsm_bx_fs7:Show()
 	end
@@ -1035,6 +1110,11 @@ local function initializeframes()
 	local ccsm_headerlvl_fs = _G["ccsm_headerlvl_fs"] or  ccsm_sf:CreateFontString("ccsm_headerlvl_fs")
 	ccsm_headerlvl_fs:SetPoint("BOTTOMRIGHT", ccsm_b1_fs3, "TOPRIGHT", 0 ,15)
 	ccsm_headerlvl_fs:SetFont(option("fontname_mplus_header") or CCS.fontname, (option("fontsize_mplus_header") or 14), CCS.textoutline)
+	if option("showfontshadow") == true then
+		ccsm_headerlvl_fs:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ccsm_headerlvl_fs:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	                                                                
+	
 	ccsm_headerlvl_fs:SetText(LEVEL)
     ccsm_headerlvl_fs:SetTextColor(
         option("fontcolor_mplus_header")[1] or 1,
@@ -1047,6 +1127,11 @@ local function initializeframes()
 	local ccsm_header_fs = _G["ccsm_header_fs"] or  ccsm_sf:CreateFontString("ccsm_header_fs")
 	ccsm_header_fs:SetPoint("BOTTOMRIGHT", ccsm_b1_fs4, "TOPRIGHT", 0 ,15)
 	ccsm_header_fs:SetFont(option("fontname_mplus_header") or CCS.fontname, (option("fontsize_mplus_header") or 14), CCS.textoutline)
+	if option("showfontshadow") == true then
+		ccsm_header_fs:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ccsm_header_fs:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	                                                                
+	
 	ccsm_header_fs:SetText(PVP_RATING_HEADER)
     ccsm_header_fs:SetTextColor(
         option("fontcolor_mplus_header")[1] or 1,
@@ -1059,6 +1144,11 @@ local function initializeframes()
 	local ccsm_fbt_fs = _G["ccsm_fbt_fs"] or  ccsm_sf:CreateFontString("ccsm_fbt_fs")
 	ccsm_fbt_fs:SetPoint("BOTTOMLEFT", ccsm_b1_fs7, "TOPLEFT", 0 ,15)
 	ccsm_fbt_fs:SetFont(option("fontname_mplus_header") or CCS.fontname, (option("fontsize_mplus_header") or 14), CCS.textoutline)
+	if option("showfontshadow") == true then
+		ccsm_fbt_fs:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ccsm_fbt_fs:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	                                                                
+	
 	ccsm_fbt_fs:SetText(BEST)
     ccsm_fbt_fs:SetTextColor(
         option("fontcolor_mplus_header")[1] or 1,
@@ -1071,6 +1161,11 @@ local function initializeframes()
 	local ccsm_tp_fs = _G["ccsm_tp_fs"] or  ccsm_sf:CreateFontString("ccsm_tp_fs")
 	ccsm_tp_fs:SetPoint("BOTTOMLEFT", ccsm_b1_btn1, "TOPLEFT", 0 , 10)
 	ccsm_tp_fs:SetFont(option("fontname_mplus_header") or CCS.fontname, (option("fontsize_mplus_header") or 14), CCS.textoutline)
+	if option("showfontshadow") == true then
+		ccsm_tp_fs:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ccsm_tp_fs:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	                                                                
+	
 	ccsm_tp_fs:SetText(TELEPORT_TO_DUNGEON)
     ccsm_tp_fs:SetTextColor(
         option("fontcolor_mplus_header")[1] or 1,
@@ -1102,6 +1197,11 @@ function module:Initialize()
 	btnfont1:SetPoint("LEFT", btn, "LEFT", 0 ,0)
 	btnfont1:SetSize(150, 60)
 	btnfont1:SetFont(option("fontname_mplus") or CCS.fontname, (option("fontsize_mplus") or 11), CCS.textoutline)
+	if option("showfontshadow") == true then
+		btnfont1:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		btnfont1:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	                                                                
+	
 	btnfont1:SetText(textstring)
 	btnfont1:SetJustifyH("CENTER")
 
@@ -1153,7 +1253,6 @@ function module:Initialize()
 
 	btn2:SetScript("OnLeave", function(self)
 		GameTooltip:Hide()
-
 		-- Revert to default texture
 		self.icon:SetTexture("Interface\\AddOns\\ChonkyCharacterSheet\\Media\\Textures\\rightarrow.png")
 	end)
@@ -1167,7 +1266,6 @@ function module:Initialize()
 			if def then
 				CCS:UpdateOption(def, _G["ccsm_sf"]:IsShown())
 				C_Timer.After(.1, function() CCS:LoadOptions() end)
-				
 			end
 			return
 		end

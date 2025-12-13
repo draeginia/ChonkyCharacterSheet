@@ -196,186 +196,213 @@ function module:Initialize()
         if scrollFrame:GetVerticalScrollRange() > 0 then  CCS_stat_sfScrollBar:Show() else CCS_stat_sfScrollBar:Hide() end
         
         -- Ilvl Frame
-        
-        local btn = _G["CSPilvl"] or CreateFrame("Button", "CSPilvl", scrollChild)
-        local btnfont1
-        local btnfontilvl = _G["CSPilvlfs1"] or btn:CreateFontString("CSPilvlfs1")
-        local btntex = _G["CSPilvltex"] or btn:CreateTexture("CSPilvltex", "BACKGROUND", nil, 1)
-        local avgItemLevel, avgItemLevelEquipped, avgItemLevelPvP = GetAverageItemLevel();
-        local Color = "a336ed"
-        local tt_name = ""
-        local tt_desc = ""
+        do
+            local btn = _G["CSPilvl"] or CreateFrame("Button", "CSPilvl", scrollChild)
+            local btnfont1
+            local btnfontilvl = _G["CSPilvlfs1"] or btn:CreateFontString("CSPilvlfs1")
+            local btntex = _G["CSPilvltex"] or btn:CreateTexture("CSPilvltex", "BACKGROUND", nil, 1)
+            local avgItemLevel, avgItemLevelEquipped, avgItemLevelPvP = GetAverageItemLevel();
+            local Color = "a336ed"
+            local tt_name = ""
+            local tt_desc = ""
 
-        btn:SetParent(scrollChild)
-        btn:ClearAllPoints()
-        btn:SetSize(Width, Height*(option("fontsize_cilvl") or 20) /20)
-        btn:SetPoint("TOPLEFT", scrollChild, "TOPLEFT", 0, 0)
-        btn:SetFrameStrata("HIGH")
-        btn.throttle = 0;
-        btn:Show()       
-        
-        btntex:ClearAllPoints()
-        btntex:SetAllPoints()
-        btntex:SetTexture("Interface\\Masks\\SquareMask.BLP")
-        btntex:SetGradient("Vertical", CreateColor(0, 0, 0, .2), CreateColor(.1, .1, .1, .4)) -- Dark Gray
-        btnfontilvl:SetPoint("CENTER", btn, "CENTER", 0 ,0)
-        btnfontilvl:SetFont(option("fontname_cilvl") or CCS.fontname, (option("fontsize_cilvl") or 20))
+            btn:SetParent(scrollChild)
+            btn:ClearAllPoints()
+            btn:SetSize(Width, Height*(option("fontsize_cilvl") or 20) /20)
+            btn:SetPoint("TOPLEFT", scrollChild, "TOPLEFT", 0, 0)
+            btn:SetFrameStrata("HIGH")
+            btn.throttle = 0;
+            btn:Show()       
+            
+            btntex:ClearAllPoints()
+            btntex:SetAllPoints()
+            btntex:SetTexture("Interface\\Masks\\SquareMask.BLP")
+            btntex:SetGradient("Vertical", CreateColor(0, 0, 0, .2), CreateColor(.1, .1, .1, .4)) -- Dark Gray
+            btnfontilvl:SetPoint("CENTER", btn, "CENTER", 0 ,0)
+            btnfontilvl:SetFont(option("fontname_cilvl") or CCS.fontname, (option("fontsize_cilvl") or 20), CCS.textoutline)
+            if option("showfontshadow") == true then
+                btnfontilvl:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+                btnfontilvl:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+            end	                                                
+            
+            CCS.PreloadEquippedItemInfo("player")
+            CCS.WaitForItemInfoReady("player", function()
+                local color = CCS:GetAverageEquippedRarityHex("player")
+                Color = color
 
-        CCS.PreloadEquippedItemInfo("player")
-        CCS.WaitForItemInfoReady("player", function()
-            local color = CCS:GetAverageEquippedRarityHex("player")
-            Color = color
+                avgItemLevelEquipped = format("%.2f", avgItemLevelEquipped)
+                avgItemLevel = format("%.2f", avgItemLevel)
+                avgItemLevelPvP = format("%.2f", avgItemLevelPvP)
 
-            avgItemLevelEquipped = format("%.2f", avgItemLevelEquipped)
-            avgItemLevel = format("%.2f", avgItemLevel)
-            avgItemLevelPvP = format("%.2f", avgItemLevelPvP)
+                btnfontilvl:SetText(format("|cFF%s%s / %s|r", Color, avgItemLevelEquipped, avgItemLevel))
 
-            btnfontilvl:SetText(format("|cFF%s%s / %s|r", Color, avgItemLevelEquipped, avgItemLevel))
+                tt_name = HIGHLIGHT_FONT_COLOR_CODE..format(PAPERDOLLFRAME_TOOLTIP_FORMAT, STAT_AVERAGE_ITEM_LEVEL).." "..avgItemLevel
+                tt_name = tt_name .. "  " .. format(STAT_AVERAGE_ITEM_LEVEL_EQUIPPED, avgItemLevelEquipped)
+                tt_name = tt_name .. FONT_COLOR_CODE_CLOSE
 
-            tt_name = HIGHLIGHT_FONT_COLOR_CODE..format(PAPERDOLLFRAME_TOOLTIP_FORMAT, STAT_AVERAGE_ITEM_LEVEL).." "..avgItemLevel
-            tt_name = tt_name .. "  " .. format(STAT_AVERAGE_ITEM_LEVEL_EQUIPPED, avgItemLevelEquipped)
-            tt_name = tt_name .. FONT_COLOR_CODE_CLOSE
+                tt_desc = STAT_AVERAGE_ITEM_LEVEL_TOOLTIP
+                tt_desc = tt_desc.."\n\n"..STAT_AVERAGE_PVP_ITEM_LEVEL:format(avgItemLevelPvP)
 
-            tt_desc = STAT_AVERAGE_ITEM_LEVEL_TOOLTIP
-            tt_desc = tt_desc.."\n\n"..STAT_AVERAGE_PVP_ITEM_LEVEL:format(avgItemLevelPvP)
+                btn:SetScript("OnEnter", function()
+                    GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+                    GameTooltip:AddDoubleLine(tt_name, nil, 1, 1, 1, 1, 1, 1)
+                    GameTooltip:AddLine(tt_desc, nil, nil, nil, true)
+                    GameTooltip:Show()
+                end)
+                btn:SetScript("OnLeave", function() GameTooltip:Hide() end)
 
-            btn:SetScript("OnEnter", function()
-                GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-                GameTooltip:AddDoubleLine(tt_name, nil, 1, 1, 1, 1, 1, 1)
-                GameTooltip:AddLine(tt_desc, nil, nil, nil, true)
-                GameTooltip:Show()
+            end)
+        end
+        do
+            -- Health Frame
+            local btn = _G["CSPhp"] or CreateFrame("Button", "CSPhp", scrollChild)
+            local btnfont1 = _G["CSPhpfs1"] or btn:CreateFontString("CSPhpfs1")
+            local btnfont2 = _G["CSPhpfs2"] or btn:CreateFontString("CSPhpfs2")
+            local btntex = _G["CSPhptex"] or btn:CreateTexture("CSPhptex", "BACKGROUND", nil, 1)
+            local tt_name = ""
+            local tt_desc = ""
+
+            local health = UnitHealthMax("player");
+            local healthText = BreakUpLargeNumbers(health);
+            
+            btn:SetParent(scrollChild)
+            btn:ClearAllPoints()
+
+            btn:SetSize(Width, Height*(option("fontsize_hppower") or 17)/17)
+            btn:SetPoint("TOPLEFT", CSPilvl, "BOTTOMLEFT", 0, -yOffset)            
+            btn:SetFrameStrata("HIGH")
+            btn:Show()            
+            
+            btntex:ClearAllPoints()
+            btntex:SetAllPoints()
+            btntex:SetTexture("Interface\\Masks\\SquareMask.BLP")
+            btntex:SetGradient("Horizontal", CreateColor(1, 0, 0, 0.4), CreateColor(1, 0, 0, 0)) -- Red (for HP)
+            
+            btnfont1:SetPoint("LEFT", CSPhp, "LEFT", 0 ,0)
+            btnfont1:SetFont(option("fontname_hppower") or CCS.fontname, (option("fontsize_hppower") or 12), CCS.textoutline)
+            if option("showfontshadow") == true then
+                btnfont1:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+                btnfont1:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+            end	                                                
+            
+            btnfont1:SetTextColor(
+                option("fontcolor_hppower")[1] or 1,
+                option("fontcolor_hppower")[2] or 1,
+                option("fontcolor_hppower")[3] or 1,
+                option("fontcolor_hppower")[4] or 1
+            )
+            btnfont1:SetText(ITEM_MOD_HEALTH_SHORT)
+            
+            btnfont2:SetPoint("RIGHT", CSPhp, "RIGHT", 0 ,0)
+            btnfont2:SetFont(option("fontname_hppower") or CCS.fontname, (option("fontsize_hppower") or 12), CCS.textoutline)
+            if option("showfontshadow") == true then
+                btnfont2:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+                btnfont2:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+            end	                                                
+            
+            btnfont2:SetTextColor(
+                option("fontcolor_hppower")[1] or 1,
+                option("fontcolor_hppower")[2] or 1,
+                option("fontcolor_hppower")[3] or 1,
+                option("fontcolor_hppower")[4] or 1
+            )
+            
+            btnfont2:SetText(healthText)
+            
+            
+            tt_name = HIGHLIGHT_FONT_COLOR_CODE..format(PAPERDOLLFRAME_TOOLTIP_FORMAT, HEALTH).." "..healthText..FONT_COLOR_CODE_CLOSE;
+            tt_desc = STAT_HEALTH_TOOLTIP;
+            
+            btn:SetScript("OnEnter", function() GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+                    GameTooltip:AddDoubleLine(tt_name, nil, 1, 1, 1, 1, 1, 1) 
+                    GameTooltip:AddLine(tt_desc, nil, nil, nil, true)   
+                    GameTooltip:Show()
             end)
             btn:SetScript("OnLeave", function() GameTooltip:Hide() end)
-
-        end)
-        
-        -- Health Frame
-        btn = _G["CSPhp"] or CreateFrame("Button", "CSPhp", scrollChild)
-        btnfont1 = _G["CSPhpfs1"] or btn:CreateFontString("CSPhpfs1")
-        btnfont2 = _G["CSPhpfs2"] or btn:CreateFontString("CSPhpfs2")
-        btntex = _G["CSPhptex"] or btn:CreateTexture("CSPhptex", "BACKGROUND", nil, 1)
-        tt_name = ""
-        tt_desc = ""
-
-        local health = UnitHealthMax("player");
-        local healthText = BreakUpLargeNumbers(health);
-        
-        btn:SetParent(scrollChild)
-        btn:ClearAllPoints()
-
-        btn:SetSize(Width, Height*(option("fontsize_hppower") or 17)/17)
-        btn:SetPoint("TOPLEFT", CSPilvl, "BOTTOMLEFT", 0, -yOffset)            
-        btn:SetFrameStrata("HIGH")
-        btn:Show()            
-        
-        btntex:ClearAllPoints()
-        btntex:SetAllPoints()
-        btntex:SetTexture("Interface\\Masks\\SquareMask.BLP")
-        btntex:SetGradient("Horizontal", CreateColor(1, 0, 0, 0.4), CreateColor(1, 0, 0, 0)) -- Red (for HP)
-        
-        btnfont1:SetPoint("LEFT", CSPhp, "LEFT", 0 ,0)
-        btnfont1:SetFont(option("fontname_hppower") or CCS.fontname, (option("fontsize_hppower") or 12), CCS.textoutline)
-        btnfont1:SetTextColor(
-            option("fontcolor_hppower")[1] or 1,
-            option("fontcolor_hppower")[2] or 1,
-            option("fontcolor_hppower")[3] or 1,
-            option("fontcolor_hppower")[4] or 1
-        )
-        btnfont1:SetText(ITEM_MOD_HEALTH_SHORT)
-        
-        btnfont2:SetPoint("RIGHT", CSPhp, "RIGHT", 0 ,0)
-        btnfont2:SetFont(option("fontname_hppower") or CCS.fontname, (option("fontsize_hppower") or 12), CCS.textoutline)
-        btnfont2:SetTextColor(
-            option("fontcolor_hppower")[1] or 1,
-            option("fontcolor_hppower")[2] or 1,
-            option("fontcolor_hppower")[3] or 1,
-            option("fontcolor_hppower")[4] or 1
-        )
-        
-        btnfont2:SetText(healthText)
-        
-        
-        tt_name = HIGHLIGHT_FONT_COLOR_CODE..format(PAPERDOLLFRAME_TOOLTIP_FORMAT, HEALTH).." "..healthText..FONT_COLOR_CODE_CLOSE;
-        tt_desc = STAT_HEALTH_TOOLTIP;
-        
-        btn:SetScript("OnEnter", function() GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-                GameTooltip:AddDoubleLine(tt_name, nil, 1, 1, 1, 1, 1, 1) 
-                GameTooltip:AddLine(tt_desc, nil, nil, nil, true)   
-                GameTooltip:Show()
-        end)
-        btn:SetScript("OnLeave", function() GameTooltip:Hide() end)
+        end
         -- Character Power Frame
-        btn = _G["CSPpower"] or CreateFrame("Button", "CSPpower", scrollChild)
-        btnfont1 = _G["CSPpowerfs1"] or btn:CreateFontString("CSPpowerfs1")
-        btnfont2 = _G["CSPpowerfs2"] or btn:CreateFontString("CSPpowerfs2")
-        btntex = _G["CSPpowertex"] or btn:CreateTexture("CSPpowertex", "BACKGROUND", nil, 1)
-        local powerType, powerToken, altR, altG, altB = UnitPowerType("player")
-        local power = UnitPowerMax("player") or 0;
-        local powerText = BreakUpLargeNumbers(power);
-        local info = PowerBarColor[powerToken];
-        tt_name = ""
-        tt_desc = ""
-        altR, altG, altB = 0.1, 0.1, 0.1
-        if info then altR, altG, altB = info.r, info.g, info.b end
-        
-        btn:SetParent(scrollChild)
-        btn:ClearAllPoints()
-        btn:SetFrameStrata("HIGH")
-        btn:Show()            
-        
-        btn:SetSize(Width, Height*(option("fontsize_hppower") or 17)/17)
-        btn:SetPoint("TOPLEFT", CSPhp, "BOTTOMLEFT", 0, -yOffset)            
-        btn:SetFrameStrata("HIGH")
-        btn:Show()            
-        
-        btntex:ClearAllPoints()
-        btntex:SetAllPoints()
-        btntex:SetTexture("Interface\\Masks\\SquareMask.BLP")
-        btntex:SetGradient("Horizontal", CreateColor(altR, altG, altB, 0.4), CreateColor(altR, altG, altB, 0)) -- Color based on power type
-        
-        btnfont1:SetPoint("LEFT", btn, "LEFT", 0 ,0)
-        btnfont1:SetFont(option("fontname_hppower") or CCS.fontname, (option("fontsize_hppower") or 12), CCS.textoutline)
-        btnfont1:SetTextColor(
-            option("fontcolor_hppower")[1] or 1,
-            option("fontcolor_hppower")[2] or 1,
-            option("fontcolor_hppower")[3] or 1,
-            option("fontcolor_hppower")[4] or 1
-        )
-        btnfont1:SetText(CCS.POWER_TYPES_TABLE[powerType])
-        
-        btnfont2:SetPoint("RIGHT", btn, "RIGHT", 0 ,0)
-        btnfont2:SetFont(option("fontname_hppower") or CCS.fontname, (option("fontsize_hppower") or 12), CCS.textoutline)
-        btnfont2:SetTextColor(
-            option("fontcolor_hppower")[1] or 1,
-            option("fontcolor_hppower")[2] or 1,
-            option("fontcolor_hppower")[3] or 1,
-            option("fontcolor_hppower")[4] or 1
-        )
-        btnfont2:SetText(powerText)
-        
-        tt_name = HIGHLIGHT_FONT_COLOR_CODE..format(PAPERDOLLFRAME_TOOLTIP_FORMAT, (powerToken or "")).." "..(powerText or "") .. FONT_COLOR_CODE_CLOSE;
-        tt_desc = _G["STAT_"..(powerToken or "") .."_TOOLTIP"];
-        
-        btn:SetScript("OnEnter", function() GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
-                GameTooltip:AddDoubleLine(tt_name, nil, 1, 1, 1, 1, 1, 1) 
-                GameTooltip:AddLine(tt_desc, nil, nil, nil, true)   
-                GameTooltip:Show()
-        end)
-        btn:SetScript("OnLeave", function() GameTooltip:Hide() end)
-        
+        do
+            local btn = _G["CSPpower"] or CreateFrame("Button", "CSPpower", scrollChild)
+            local btnfont1 = _G["CSPpowerfs1"] or btn:CreateFontString("CSPpowerfs1")
+            local btnfont2 = _G["CSPpowerfs2"] or btn:CreateFontString("CSPpowerfs2")
+            local btntex = _G["CSPpowertex"] or btn:CreateTexture("CSPpowertex", "BACKGROUND", nil, 1)
+            local powerType, powerToken, altR, altG, altB = UnitPowerType("player")
+            local power = UnitPowerMax("player") or 0;
+            local powerText = BreakUpLargeNumbers(power);
+            local info = PowerBarColor[powerToken];
+            local tt_name = ""
+            local tt_desc = ""
+            local altR, altG, altB = 0.1, 0.1, 0.1
+            if info then altR, altG, altB = info.r, info.g, info.b end
+            
+            btn:SetParent(scrollChild)
+            btn:ClearAllPoints()
+            btn:SetFrameStrata("HIGH")
+            btn:Show()            
+            
+            btn:SetSize(Width, Height*(option("fontsize_hppower") or 17)/17)
+            btn:SetPoint("TOPLEFT", CSPhp, "BOTTOMLEFT", 0, -yOffset)            
+            btn:SetFrameStrata("HIGH")
+            btn:Show()            
+            
+            btntex:ClearAllPoints()
+            btntex:SetAllPoints()
+            btntex:SetTexture("Interface\\Masks\\SquareMask.BLP")
+            btntex:SetGradient("Horizontal", CreateColor(altR, altG, altB, 0.4), CreateColor(altR, altG, altB, 0)) -- Color based on power type
+            
+            btnfont1:SetPoint("LEFT", btn, "LEFT", 0 ,0)
+            btnfont1:SetFont(option("fontname_hppower") or CCS.fontname, (option("fontsize_hppower") or 12), CCS.textoutline)
+            if option("showfontshadow") == true then
+                btnfont1:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+                btnfont1:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+            end	                                                
+            
+            btnfont1:SetTextColor(
+                option("fontcolor_hppower")[1] or 1,
+                option("fontcolor_hppower")[2] or 1,
+                option("fontcolor_hppower")[3] or 1,
+                option("fontcolor_hppower")[4] or 1
+            )
+            btnfont1:SetText(CCS.POWER_TYPES_TABLE[powerType])
+            
+            btnfont2:SetPoint("RIGHT", btn, "RIGHT", 0 ,0)
+            btnfont2:SetFont(option("fontname_hppower") or CCS.fontname, (option("fontsize_hppower") or 12), CCS.textoutline)
+            if option("showfontshadow") == true then
+                btnfont2:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+                btnfont2:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+            end	                                                
+            
+            btnfont2:SetTextColor(
+                option("fontcolor_hppower")[1] or 1,
+                option("fontcolor_hppower")[2] or 1,
+                option("fontcolor_hppower")[3] or 1,
+                option("fontcolor_hppower")[4] or 1
+            )
+            btnfont2:SetText(powerText)
+            
+            tt_name = HIGHLIGHT_FONT_COLOR_CODE..format(PAPERDOLLFRAME_TOOLTIP_FORMAT, (powerToken or "")).." "..(powerText or "") .. FONT_COLOR_CODE_CLOSE;
+            tt_desc = _G["STAT_"..(powerToken or "") .."_TOOLTIP"];
+            
+            btn:SetScript("OnEnter", function() GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR")
+                    GameTooltip:AddDoubleLine(tt_name, nil, 1, 1, 1, 1, 1, 1) 
+                    GameTooltip:AddLine(tt_desc, nil, nil, nil, true)   
+                    GameTooltip:Show()
+            end)
+            btn:SetScript("OnLeave", function() GameTooltip:Hide() end)
+        end    
         ---------------------------
         --  Start Frame Creation --
         ---------------------------
         local prev_row = scrollChild
         
         for row = 1, 24 do -- just mass creating the frames, textures, and strings, will set them later
-            btn = _G["CSPbtn"..row] or CreateFrame("Button", "CSPbtn"..row, scrollChild)
-            btnfont1 = _G[btn:GetName().."fs1"] or btn:CreateFontString(btn:GetName().."fs1")
-            btnfont2 = _G[btn:GetName().."fs2"] or btn:CreateFontString(btn:GetName().."fs2")
-            btntex = _G[btn:GetName().."tex"] or btn:CreateTexture(btn:GetName().."tex", "BACKGROUND", nil, 1)
+            local btn = _G["CSPbtn"..row] or CreateFrame("Button", "CSPbtn"..row, scrollChild)
+            local btnfont1 = _G[btn:GetName().."fs1"] or btn:CreateFontString(btn:GetName().."fs1")
+            local btnfont2 = _G[btn:GetName().."fs2"] or btn:CreateFontString(btn:GetName().."fs2")
+            local btntex = _G[btn:GetName().."tex"] or btn:CreateTexture(btn:GetName().."tex", "BACKGROUND", nil, 1)
             local tooltip = false
-            tt_name = ""
-            tt_desc = ""
+            local tt_name = ""
+            local tt_desc = ""
             
             if row == 1 or row == 2 or row == 3 or row == 4 then
                 --r =0.64; g =0.47; b = 0.1 -- Gold
@@ -434,6 +461,11 @@ function module:Initialize()
                 
                 btnfont1:SetPoint("CENTER", btn, "CENTER", 0 ,0)
                 btnfont1:SetFont(option("fontname_statheaders") or CCS.fontname, (option("fontsize_statheaders") or 14), CCS.textoutline)
+                if option("showfontshadow") == true then
+                    btnfont1:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+                    btnfont1:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+                end	                                                
+                
                 btnfont1:SetText(STAT_CATEGORY_ATTRIBUTES)
                 btnfont1:SetTextColor(
                     option("fontcolor_statheaders")[1] or 1,
@@ -464,6 +496,11 @@ function module:Initialize()
                 
                 btnfont1:SetPoint("LEFT", btn, "LEFT", 0 ,0)
                 btnfont1:SetFont(option("fontname_statname") or CCS.fontname, (option("fontsize_statname") or 10), CCS.textoutline)
+                if option("showfontshadow") == true then
+                    btnfont1:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+                    btnfont1:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+                end	                                                
+                
                 btnfont1:SetText("Name")
                 btnfont1:SetTextColor(
                     option("fontcolor_statname")[1] or 1,
@@ -474,6 +511,11 @@ function module:Initialize()
                
                 btnfont2:SetPoint("RIGHT", btn, "RIGHT", 0 ,0)
                 btnfont2:SetFont(option("fontname_stats") or CCS.fontname, (option("fontsize_stats") or 10), CCS.textoutline)
+                if option("showfontshadow") == true then
+                    btnfont2:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+                    btnfont2:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+                end	                                                
+                
                 btnfont2:SetText("Value")
                 btnfont2:SetTextColor(
                     option("fontcolor_stats")[1] or 1,
@@ -551,7 +593,7 @@ function module:Initialize()
                         effectiveStatDisplay = RED_FONT_COLOR_CODE..effectiveStatDisplay..FONT_COLOR_CODE_CLOSE;
                     end
                 end
-                
+
                 -- Strength
                 if ( statIndex == LE_UNIT_STAT_STRENGTH ) then
                     local attackPower = GetAttackPowerForStat(statIndex,effectiveStat);
@@ -569,6 +611,7 @@ function module:Initialize()
                     else
                         tt_desc = STAT_NO_BENEFIT_TOOLTIP;
                     end
+                    tt_name = HIGHLIGHT_FONT_COLOR_CODE..format(PAPERDOLLFRAME_TOOLTIP_FORMAT, tmp_stat_name[primaryStat]).." "..tt_name;
                     -- Agility
                 elseif ( statIndex == LE_UNIT_STAT_AGILITY ) then
                     local attackPower = GetAttackPowerForStat(statIndex,effectiveStat);
@@ -587,9 +630,11 @@ function module:Initialize()
                     else
                         tt_desc = STAT_NO_BENEFIT_TOOLTIP;
                     end
+                    tt_name = HIGHLIGHT_FONT_COLOR_CODE..format(PAPERDOLLFRAME_TOOLTIP_FORMAT, tmp_stat_name[primaryStat]).." "..tt_name;
                     -- Stamina
                 elseif ( statIndex == LE_UNIT_STAT_STAMINA ) then
                     tt_desc = format(tt_desc, BreakUpLargeNumbers(((effectiveStat*UnitHPPerStamina("player")))*GetUnitMaxHealthModifier("player")));
+                    tt_name = HIGHLIGHT_FONT_COLOR_CODE..format(PAPERDOLLFRAME_TOOLTIP_FORMAT, tmp_stat_name[primaryStat]).." "..tt_name;
                     -- Intellect
                 elseif ( statIndex == LE_UNIT_STAT_INTELLECT ) then
                     if ( UnitHasMana("player") ) then
@@ -610,6 +655,7 @@ function module:Initialize()
                     else
                         tt_desc = STAT_NO_BENEFIT_TOOLTIP;
                     end
+                    tt_name = HIGHLIGHT_FONT_COLOR_CODE..format(PAPERDOLLFRAME_TOOLTIP_FORMAT, tmp_stat_name[primaryStat]).." "..tt_name;
                 end
                 
             elseif row == 3 then  -- Stamina
@@ -625,7 +671,7 @@ function module:Initialize()
                 local hpperstam = 20 --UnitHPPerStamina("player") --hard code to 20?
                 local maxhealthmod = 1 --GetUnitMaxHealthModifier("player") -- Btw. This is a secret value now for some reason...
                 
-                tt_name = HIGHLIGHT_FONT_COLOR_CODE..format(PAPERDOLLFRAME_TOOLTIP_FORMAT, statName).." ";
+                tt_name = HIGHLIGHT_FONT_COLOR_CODE..format(PAPERDOLLFRAME_TOOLTIP_FORMAT, statName).." "..tt_name;
                 tt_desc = tt_desc .. format(_G["DEFAULT_STAT"..statIndex.."_TOOLTIP"], BreakUpLargeNumbers(((effectiveStat*hpperstam))*maxhealthmod));                
                 
                 --tt_name = HIGHLIGHT_FONT_COLOR_CODE..format(PAPERDOLLFRAME_TOOLTIP_FORMAT, statName).." ";
@@ -738,79 +784,6 @@ function module:Initialize()
                         versatilityDamageBonus,
                         versatilityDamageTakenReduction)
                 end
-
-
-                --[[
-            elseif    row == 6 then 
-                -- Crit Rating
-                btnfont1:SetText(format("%s", ITEM_MOD_CRIT_RATING_SHORT))                
-                btnfont2:SetText(format('(%s%%) %6.6s',CCS.round(GetSpellCritChance('player')), BreakUpLargeNumbers(GetCombatRating(CR_CRIT_SPELL))))
-                
-                local extraCritChance = GetCombatRatingBonus(CR_CRIT_SPELL);
-                local extraCritRating = GetCombatRating(CR_CRIT_SPELL);
-                tt_name = HIGHLIGHT_FONT_COLOR_CODE..format(PAPERDOLLFRAME_TOOLTIP_FORMAT, STAT_CRITICAL_STRIKE)..FONT_COLOR_CODE_CLOSE;
-                if (GetCritChanceProvidesParryEffect()) then
-                    tt_desc = format(CR_CRIT_PARRY_RATING_TOOLTIP, BreakUpLargeNumbers(extraCritRating), extraCritChance, GetCombatRatingBonusForCombatRatingValue(CR_PARRY, extraCritRating));
-                else
-                    tt_desc =  format(CR_CRIT_TOOLTIP, BreakUpLargeNumbers(extraCritRating), extraCritChance);
-                end
-                
-            elseif    row == 7 then  
-                -- Haste Rating
-                btnfont1:SetText(format("%s", ITEM_MOD_HASTE_RATING_SHORT))                
-                btnfont2:SetText(format('(%s%%) %6.6s',CCS.round(UnitSpellHaste('player')), BreakUpLargeNumbers(GetCombatRating(CR_HASTE_SPELL))))
-
-                tt_name = HIGHLIGHT_FONT_COLOR_CODE..format(PAPERDOLLFRAME_TOOLTIP_FORMAT, STAT_HASTE)..FONT_COLOR_CODE_CLOSE;                
-                
-                
-                local _, class = UnitClass("player");
-                tt_desc = _G["STAT_HASTE_"..class.."_TOOLTIP"];
-                if (not tt_desc) then tt_desc = STAT_HASTE_TOOLTIP;    end
-                tt_desc = tt_desc .. format(STAT_HASTE_BASE_TOOLTIP, BreakUpLargeNumbers(GetCombatRating(CR_HASTE_SPELL)), GetCombatRatingBonus(CR_HASTE_SPELL));
-                
-            elseif    row == 8 then 
-                -- Mastery Rating
-
-                btnfont1:SetText(format("%s", ITEM_MOD_MASTERY_RATING_SHORT))                
-                btnfont2:SetText(format('(%s%%) %6.6s',CCS.round(GetMasteryEffect('player')),BreakUpLargeNumbers(GetCombatRating(CR_MASTERY))))
-                
-                local _, class = UnitClass("player");
-                local mastery, bonusCoeff = GetMasteryEffect();
-                local masteryBonus = GetCombatRatingBonus(CR_MASTERY) * bonusCoeff;
-                
-                local primaryTalentTree = GetSpecialization();
-                
-                tt_name = HIGHLIGHT_FONT_COLOR_CODE..format(PAPERDOLLFRAME_TOOLTIP_FORMAT, STAT_MASTERY)..FONT_COLOR_CODE_CLOSE;
-                
-                if (primaryTalentTree) then
-                    local masterySpell, masterySpell2 = GetSpecializationMasterySpells(primaryTalentTree);
-                    
-                    if (masterySpell) then
-                        local spelldesc = C_Spell.GetSpellDescription(masterySpell)
-                        tt_desc = tt_desc .. (spelldesc or "\n")
-                    end
-                    
-                    if (masterySpell2) then
-                        local spelldesc = C_Spell.GetSpellDescription(masterySpell2)
-                        tt_desc = tt_desc .. "\n" .. (spelldesc or "\n")
-                    end
-                    
-                    tt_desc = tt_desc .. "\n" .. format(STAT_MASTERY_TOOLTIP, BreakUpLargeNumbers(GetCombatRating(CR_MASTERY)), masteryBonus)
-                else
-                    tt_desc = tt_desc .. format(STAT_MASTERY_TOOLTIP, BreakUpLargeNumbers(GetCombatRating(CR_MASTERY)), masteryBonus) .. "\n" .. STAT_MASTERY_TOOLTIP_NO_TALENT_SPEC
-                end
-                
-            elseif    row == 9 then 
-                -- Versatility Rating
-                local versatility = GetCombatRating(CR_VERSATILITY_DAMAGE_DONE);
-                local versatilityDamageBonus = GetCombatRatingBonus(CR_VERSATILITY_DAMAGE_DONE) + GetVersatilityBonus(CR_VERSATILITY_DAMAGE_DONE);
-                local versatilityDamageTakenReduction = GetCombatRatingBonus(CR_VERSATILITY_DAMAGE_TAKEN) + GetVersatilityBonus(CR_VERSATILITY_DAMAGE_TAKEN);
-                
-                btnfont1:SetText(format("%s", STAT_VERSATILITY)) -- Versatility
-                btnfont2:SetText(format('(%s%% / %s%%) %6.6s',CCS.round(versatilityDamageBonus), CCS.round(versatilityDamageTakenReduction),BreakUpLargeNumbers(versatility)))
-                
-                tt_name = HIGHLIGHT_FONT_COLOR_CODE..format(PAPERDOLLFRAME_TOOLTIP_FORMAT, STAT_VERSATILITY)..FONT_COLOR_CODE_CLOSE;
-                tt_desc = format(CR_VERSATILITY_TOOLTIP, versatilityDamageBonus, versatilityDamageTakenReduction, BreakUpLargeNumbers(versatility), versatilityDamageBonus, versatilityDamageTakenReduction);--]]
                 
                 ---------------------------
                 -- Attack Category

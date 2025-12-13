@@ -36,7 +36,12 @@ chktex:SetPoint("TOPLEFT", frame, "TOPLEFT", 5, -5)
 chktex:SetTexture("Interface\\AddOns\\ChonkyCharacterSheet\\Media\\Textures\\chonky.png")
 
 local chonkfont = frame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-chonkfont:SetFont(CCS:GetDefaultFontForLocale(), 12, "OUTLINE")
+chonkfont:SetFont(CCS:GetDefaultFontForLocale(), 12, CCS.textoutline)
+if option("showfontshadow") == true then
+    chonkfont:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+    chonkfont:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+end	                                                
+
 chonkfont:SetWordWrap(true)
 chonkfont:SetSize(70, 64)
 chonkfont:SetTextColor(1, 1, 1, 1) -- White
@@ -139,7 +144,12 @@ for i, cat in ipairs(visibleCategories) do
     btn:SetPoint("TOPLEFT", 5, -((i - 1) * 23) - 150)
 
     btn.text = btn:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-    btn.text:SetFont(CCS:GetDefaultFontForLocale(), 12)
+    btn.text:SetFont(CCS:GetDefaultFontForLocale(), 12, CCS.textoutline)
+    if option("showfontshadow") == true then
+        btn.text:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+        btn.text:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+    end	                                                
+    
     btn.text:SetPoint("LEFT")
     btn.text:SetTextColor(1, 1, 1, 1) -- white
     btn.text:SetText(L["CATEGORY_" .. cat] or cat)
@@ -204,6 +214,14 @@ function CCS.InitializeModules()
     --if InCombatLockdown() then CCS.incombat = true return end
     if CCS.Throttles then throttle = CCS.Throttles.Init end
     
+    if CCS:GetOptionValue("textoutline") == "Thin Outline" then
+        CCS.textoutline = "OUTLINE"
+    elseif CCS:GetOptionValue("textoutline") == "Thick Outline" then
+        CCS.textoutline = "THICKOUTLINE"
+    else
+        CCS.textoutline = ""
+    end
+
     if (GetTime() - throttle) >= .03 then -- throttle to 1 update every 0.3s
         for _, module in pairs(CCS.Modules) do
             if type(module.Initialize) == "function" then
@@ -212,6 +230,7 @@ function CCS.InitializeModules()
         end
         CCS:FireEvent("CCS_EVENT_OPTIONS")        
         frame:SetScale(option("optionsheetscale") or 1)
+        
     end
 
     if CCS.Throttles then CCS.Throttles.Init = GetTime() end
@@ -309,7 +328,7 @@ function CCS.SkinButton(button)
     -- Font styling
     local text = button:GetFontString()
     if text then
-        text:SetFont(CCS:GetDefaultFontForLocale(), 12)
+        text:SetFont(CCS:GetDefaultFontForLocale(), 12, CCS.textoutline)
         text:SetTextColor(1, 1, 1, 1)
     end
 end
@@ -510,7 +529,7 @@ do
             local discordLabel = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
             discordLabel:SetPoint("TOPRIGHT", frame, "TOP", -10, -3)
             discordLabel:SetText("|cff3399ffhttps://discord.gg/bSyqqa7RC4|r")
-            discordLabel:SetFont(CCS.GetDefaultFontForLocale(), 10, "OUTLINE")
+            discordLabel:SetFont(CCS.GetDefaultFontForLocale(), 10, CCS.textoutline)
             discordLabel:SetJustifyH("CENTER")
             discordLabel:SetWidth(300)
             discordLabel:SetWordWrap(true)
@@ -570,7 +589,7 @@ function CCS:RefreshOptionsUI()
                 else
                     -- native Blizzard dropdown
                     UIDropDownMenu_SetSelectedValue(def.frame, value)
-                    local display = CCS.fontPathsLocalized[value] or value
+                    local display = CCS.fontPathsLocalized[value] or L[value] or value
                     UIDropDownMenu_SetText(def.frame, display)
                 end
 
@@ -628,10 +647,15 @@ local function newHeader(def, parent, rowHeight)
     fs:SetTextColor(unpack(def.color or {1,1,1}))
 
     local fontSize = def.fontSize or 20
-    --fs:SetFont(CCS:GetDefaultFontForLocale(), fontSize)
+    --fs:SetFont(CCS:GetDefaultFontForLocale(), fontSize, CCS.textoutline)
 
     local outline = def.fontOutline or "NONE"  -- "NONE", "THIN", or "THICK"
     fs:SetFont(CCS:GetDefaultFontForLocale(), fontSize, outline)
+    if option("showfontshadow") == true then
+        fs:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+        fs:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+    end	                                                
+    
     
     fs:SetJustifyH("CENTER")
     
@@ -658,9 +682,6 @@ local function newButton(def, parent, rowHeight)
     label:SetAllPoints(btn) -- checkboxWidth + padding
     label:SetWordWrap(true)
     label:SetJustifyH("CENTER")
-    
-    --btn:SetText(def.label or "")
-    --btn.Text:SetFont(CCS:GetDefaultFontForLocale(), 12, "OUTLINE")
 
     -- OnClick handler
     if def.onClick then
@@ -748,8 +769,11 @@ local function newDropdown(def, parent, rowHeight)
     UIDropDownMenu_SetWidth(dd, slotWidth - 75)
     dd:SetPoint("TOPLEFT", lbl, "BOTTOMLEFT", -10, -2)
     dd:SetScale(.75)
-    _G[dd:GetName().."Text"]:SetFont(CCS:GetDefaultFontForLocale(), 14)
-
+    _G[dd:GetName().."Text"]:SetFont(CCS:GetDefaultFontForLocale(), 14, CCS.textoutline)
+    if option("showfontshadow") == true then
+        _G[dd:GetName().."Text"]:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+        _G[dd:GetName().."Text"]:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+    end	                                                
     
     UIDropDownMenu_Initialize(dd, function(self)
         for _, v in ipairs(def.values) do
@@ -802,6 +826,11 @@ local function newFontSelector(def, parent, rowHeight)
     local lbl = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
     lbl:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, 0)
     lbl:SetFont(CCS:GetDefaultFontForLocale(), 11, "OUTLINE")
+    if option("showfontshadow") == true then
+        lbl:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+        lbl:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+    end	                                                
+    
     lbl:SetText(def.label)
 
     -- Key for SavedVariables
@@ -876,6 +905,10 @@ local function newFontSelector(def, parent, rowHeight)
         fs:SetPoint("LEFT", dd, "LEFT", 6, 0)   -- anchor to the left edge with padding
         fs:SetJustifyH("LEFT")                  -- horizontal justification
         fs:SetFont(CCS:GetDefaultFontForLocale(), 14, "OUTLINE") -- adjust size and style
+        if option("showfontshadow") == true then
+            fs:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+            fs:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+        end	                                                
         fs:SetTextColor(1, 1, 1, 1)
     end
 
@@ -1029,6 +1062,10 @@ local function newFontSelector(def, parent, rowHeight)
                     fs:SetPoint("LEFT", btn, "LEFT", 6, 0)   -- anchor to the left edge with padding
                     fs:SetJustifyH("LEFT")                  -- horizontal justification
                     fs:SetFont(CCS:GetDefaultFontForLocale(), 14, "OUTLINE") -- adjust size and style
+                    if option("showfontshadow") == true then
+                        fs:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+                        fs:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+                    end	                                                            
                     fs:SetTextColor(1, 1, 1, 1)
                 end
 
@@ -1036,7 +1073,7 @@ local function newFontSelector(def, parent, rowHeight)
                     dd:SetSelectedValue(fontPath) -- Let the shim handle label resolution
                     menu:Hide()
                     if def.onChange then def.onChange(fontPath) end
-                    CCS.fontname = CCS:GetDefaultFontForLocale() or CCS:GetOptionValue("default_font") or "Fonts\\FRIZQT__.TTF"
+                    CCS.fontname = CCS:GetOptionValue("default_font") or CCS:GetDefaultFontForLocale() or "Fonts\\FRIZQT__.TTF"
                     CCS.InitializeModules()
                 end)
             end
@@ -1469,6 +1506,10 @@ frame:SetScript("OnShow", function(self)
                 elseif def.key == "globalprofile" then
                     def.frame:SetPoint("TOPLEFT", _G["CCS_DeleteProfileDropdown"], "BOTTOMLEFT", 0, -2)
                     def.frame.Text:SetFont(CCS:GetDefaultFontForLocale(), 10, "OUTLINE")
+                    if option("showfontshadow") == true then
+                        def.frame.Text:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+                        def.frame.Text:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+                    end	                                        
                     def.frame:Show()
                 end
             else

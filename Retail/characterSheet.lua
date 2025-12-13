@@ -239,16 +239,29 @@ local function LootSpecInit()
         
         btnfont1:SetPoint("CENTER", 0, 0)
         btnfont1:SetFont(CCS.fontname, 16, CCS.textoutline)
+        if option("showfontshadow") == true then
+            btnfont1:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+            btnfont1:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+        end
         btnfont1:SetText("**")
         
         btnfont2:SetPoint("BOTTOMLEFT", _G["CCS_loot_Btn0fs1"], "TOPLEFT",0 ,7)
         btnfont2:SetFont(option("fontname_lootspec") or CCS.fontname, (option("fontsize_lootspec") or 10), CCS.textoutline)
+        if option("showfontshadow") == true then
+            btnfont2:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+            btnfont2:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+        end	                                                                
+        
         btnfont2:SetTextColor(
             option("fontcolor_lootspec")[1] or 1,
             option("fontcolor_lootspec")[2] or 1,
             option("fontcolor_lootspec")[3] or 1,
             option("fontcolor_lootspec")[4] or 1
         )
+        if option("showfontshadow") == true then
+            btnfont2:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+            btnfont2:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+        end        
         btnfont2:SetText(SELECT_LOOT_SPECIALIZATION)  
         btnfont2:SetShown(option("showlootspectitle"))
        
@@ -295,6 +308,11 @@ local function SpecChangeInit()
                     local btnfont1 = _G["CCS_PSpecBtn1fs1"] or btn:CreateFontString("CCS_PSpecBtn1fs1")
                     btnfont1:SetPoint("BOTTOMLEFT", btn, "TOPLEFT",0 ,3)
                     btnfont1:SetFont(option("fontname_specs") or CCS.fontname, (option("fontsize_specs") or 10), CCS.textoutline)
+                    if option("showfontshadow") == true then
+                        btnfont1:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+                        btnfont1:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+                    end
+                    
                     btnfont1:SetTextColor(
                         option("fontcolor_specs")[1] or 1,
                         option("fontcolor_specs")[2] or 1,
@@ -505,6 +523,11 @@ local function ReputationFrame_Update()
                         k2.ReputationBar.barProgressText = xtext
                         k2.ReputationBar.reputationStandingText = xtext
                         k2.ReputationBar.BarText:SetFont(option("fontname_repstanding") or fontName, option("fontsize_repstanding"), CCS.textoutline)
+                        if option("showfontshadow") == true then
+                            k2.ReputationBar:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+                            k2.ReputationBar:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+                        end	                                                                
+                        
                         k2.ReputationBar.BarText:SetTextColor(
                             option("fontcolor_repstanding")[1] or 1,
                             option("fontcolor_repstanding")[2] or 1,
@@ -512,6 +535,11 @@ local function ReputationFrame_Update()
                             option("fontcolor_repstanding")[4] or 1
                         )
                         k2.Name:SetFont(option("fontname_reputation") or fontName, option("fontsize_reputation"), CCS.textoutline)
+                        if option("showfontshadow") == true then
+                            k2.Name:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+                            k2.Name:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+                        end	                                                                
+                        
                         k2.Name:SetTextColor(
                             option("fontcolor_reputation")[1] or 1,
                             option("fontcolor_reputation")[2] or 1,
@@ -545,11 +573,26 @@ local function CurrencyFrame_Update()
             local tf={TokenFrame.ScrollBox.ScrollTarget:GetChildren()}; 
             
             for _,t in ipairs(tf) do 
-                if t and t.Name then t.Name:SetFont(t.Name:GetFont(), option("fontsize_currency") or 11, "")end 
-                if t and t.Count then t.Count:SetFont(t.Count:GetFont(), option("fontsize_currency") or 11, "")end 
+                if t and t.Name then t.Name:SetFont(t.Name:GetFont(), option("fontsize_currency") or 11, CCS.textoutline)
+                        if option("showfontshadow") == true then
+                            t.Name:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+                            t.Name:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+                        end	                                                                
+                end 
+                if t and t.Count then t.Count:SetFont(t.Count:GetFont(), option("fontsize_currency") or 11, CCS.textoutline)
+                        if option("showfontshadow") == true then
+                            t.Count:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+                            t.Count:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+                        end	                                                
+                end 
 
                     if t.Text then
                         t.Text:SetFont(option("fontname_currency") or fontName, option("fontsize_currency"), CCS.textoutline)
+                        if option("showfontshadow") == true then
+                            t.Text:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+                            t.Text:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+                        end	                                                
+                        
                         t.Text:SetTextColor(
                             option("fontcolor_currency")[1] or 1,
                             option("fontcolor_currency")[2] or 1,
@@ -573,6 +616,11 @@ local function CurrencyFrame_Update()
 
                     if k2.Name then
                         k2.Name:SetFont(option("fontname_currency") or fontName, option("fontsize_currency"), CCS.textoutline)
+                        if option("showfontshadow") == true then
+                            k2.Name:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+                            k2.Name:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+                        end	                                                
+                        
                         k2.Name:SetTextColor(
                             option("fontcolor_currency")[1] or 1,
                             option("fontcolor_currency")[2] or 1,
@@ -583,6 +631,11 @@ local function CurrencyFrame_Update()
                     
                     if k2.Count then
                         k2.Count:SetFont(option("fontname_currency") or fontName, option("fontsize_currency"), CCS.textoutline)
+                        if option("showfontshadow") == true then
+                            k2.Count:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+                            k2.Count:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+                        end	                                                
+                        
                         k2.Count:SetTextColor(
                             option("fontcolor_currency")[1] or 1,
                             option("fontcolor_currency")[2] or 1,
@@ -674,9 +727,9 @@ function CCS.HookSetup()
             PaperDollFrame.TitleManagerPane:ClearAllPoints()
             PaperDollFrame.TitleManagerPane:SetPoint("TOPLEFT", CharacterFrameInsetRight, "TOPLEFT", 9, -4)
             PaperDollFrame.TitleManagerPane:SetPoint("BOTTOM", CharacterFrameInsetRight, "BOTTOM", 0, 10)
-            PaperDollFrame.TitleManagerPane:SetPoint("RIGHT", CharacterFrameBg, "RIGHT")
+            PaperDollFrame.TitleManagerPane:SetPoint("RIGHT", CharacterFrameBg, "RIGHT", -50, 0)
             PaperDollFrame.TitleManagerPane.ScrollBox:ClearAllPoints()
-            PaperDollFrame.TitleManagerPane.ScrollBox:SetPoint("TOPLEFT", CharacterFrameInsetRight, "TOPLEFT", 9, -4)
+            PaperDollFrame.TitleManagerPane.ScrollBox:SetPoint("TOPLEFT", CharacterFrameInsetRight, "TOPLEFT", 9, -24)
             PaperDollFrame.TitleManagerPane.ScrollBox:SetPoint("BOTTOM", CharacterFrameInsetRight, "BOTTOM", 0, 10)
             PaperDollFrame.TitleManagerPane.ScrollBox:SetPoint("RIGHT", CharacterFrameBg, "RIGHT", -30, 0)
                         
@@ -758,7 +811,6 @@ function module:Initialize()
     LootSpecInit()
     SpecChangeInit()
 
-
     CharacterFrame:SetHeight(479+(7*option("vpad"))) -- Do not allow the frame to get any smaller than the default bliz frame
     local Bgoffset = option("hpad")
     
@@ -834,6 +886,11 @@ function module:Initialize()
     CharacterFrameTitleText:SetPoint("LEFT", CharacterFrame, "LEFT", 50, 0)
     CharacterFrameTitleText:SetPoint("RIGHT", CharacterFrameInset.Bg, "RIGHT", -40, 0)
     CharacterFrameTitleText:SetFont( option("fontname_nametitle") or CCS.fontname, (option("fontsize_nametitle") or 12) , CCS.textoutline)
+    if option("showfontshadow") == true then
+        CharacterFrameTitleText:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+        CharacterFrameTitleText:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+    end	                                                
+    
     CharacterFrameTitleText:SetTextColor(
         option("fontcolor_nametitle")[1] or 1,
         option("fontcolor_nametitle")[2] or 1,
@@ -844,7 +901,10 @@ function module:Initialize()
     CharacterLevelText:ClearAllPoints()
     CharacterLevelText:SetPoint("TOP", CharacterFrameTitleText, "BOTTOM", 0, 0)
     CharacterLevelText:SetFont(option("fontname_levelclass") or CCS.fontname, (option("fontsize_levelclass") or 12) , CCS.textoutline)
-   
+    if option("showfontshadow") == true then
+        CharacterLevelText:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+        CharacterLevelText:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+    end	                                                
     
     CharacterFrame.NineSlice:Hide()
     CharacterFramePortrait:Hide()
@@ -1162,7 +1222,12 @@ function module:Initialize()
     local modelbtnfont1 = _G["CCS_clk_Btnfs1"] or modelbtn:CreateFontString("CCS_clk_Btnfs1")
     
     modelbtnfont1:SetPoint("BOTTOM", modelbtn, "TOP", -3 , 2)
-    modelbtnfont1:SetFont(option("fontname_showchar") or CCS.fontname, (option("fontsize_showchar") or 10), "OUTLINE")
+    modelbtnfont1:SetFont(option("fontname_showchar") or CCS.fontname, (option("fontsize_showchar") or 10), CCS.textoutline)
+    if option("showfontshadow") == true then
+        modelbtnfont1:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+        modelbtnfont1:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+    end	                                                
+    
     modelbtnfont1:SetTextColor(
         option("fontcolor_showchar")[1] or 1,
         option("fontcolor_showchar")[2] or 1,

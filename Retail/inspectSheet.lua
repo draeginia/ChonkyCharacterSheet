@@ -119,18 +119,30 @@ function CCS:inspect()
 	local cmplus = _G["CompCharacterMplusRating"] or CCS_ic:CreateFontString("CompCharacterMplusRating")
     cmplus:SetPoint("TOPLEFT", CCS_ic, "TOPLEFT", 9, -30) 
 	cmplus:SetSize(150,60)
-    cmplus:SetFont(option("fontname_mplus") or CCS.fontname, option("fontsize_mplus") or 11, "OUTLINE")
+    cmplus:SetFont(option("fontname_mplus") or CCS.fontname, option("fontsize_mplus") or 11, CCS.textoutline)
+	if option("showfontshadow") == true then
+		cmplus:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		cmplus:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end		
     cmplus:SetText(CCS.getraiderioscoreplayer(true) or "")
 
 	local implus = _G["CompInspectMplusRating"] or CCS_ic:CreateFontString("CompInspectMplusRating")
     implus:SetPoint("TOPRIGHT", CCS_ic, "TOPRIGHT", -9, -30) 
 	implus:SetSize(150,60)
-    implus:SetFont(option("fontname_mplus_inspect") or CCS.fontname, option("fontsize_mplus_inspect") or 11, "OUTLINE")
+    implus:SetFont(option("fontname_mplus_inspect") or CCS.fontname, option("fontsize_mplus_inspect") or 11, CCS.textoutline)
+	if option("showfontshadow") == true then
+		implus:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		implus:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	
     implus:SetText(CCS.getraiderioscoreinspect() or "")
 
 	local ctitname = _G["CompCharacterTitleName"] or CCS_ic:CreateFontString("CompCharacterTitleName")
     ctitname:SetPoint("TOP", CCS_ic, "TOP", -200, -15) 
     ctitname:SetFont( option("fontname_nametitle") or CCS.fontname, (option("fontsize_nametitle") or 12) , CCS.textoutline)
+	if option("showfontshadow") == true then
+		ctitname:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ctitname:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	
 	ctitname:SetSize(520, 12)
 	ctitname:SetJustifyH("CENTER")
     ctitname:SetTextColor(
@@ -145,7 +157,12 @@ function CCS:inspect()
 
 	local ititname = _G["CompInspectTitleName"] or CCS_ic:CreateFontString("CompInspectTitleName")
     ititname:SetPoint("TOP", CCS_ic, "TOP", 200, -15) 
-    ititname:SetFont(option("fontname_nametitle_inspect") or CCS.fontname, option("fontsize_nametitle_inspect") or 12, "OUTLINE")
+    ititname:SetFont(option("fontname_nametitle_inspect") or CCS.fontname, option("fontsize_nametitle_inspect") or 12, CCS.textoutline)
+	if option("showfontshadow") == true then
+		ititname:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ititname:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end
+	
 	ititname:SetSize(520, 12)
 	ititname:SetJustifyH("CENTER")
     ititname:SetTextColor(
@@ -159,6 +176,11 @@ function CCS:inspect()
 	local clvltxt = _G["CompCharacterLevelText"] or CCS_ic:CreateFontString("CompCharacterLevelText")
     clvltxt:SetPoint("TOP", ctitname, "BOTTOM", 0, 0) 
     clvltxt:SetFont(option("fontname_levelclass") or CCS.fontname, (option("fontsize_levelclass") or 12) , CCS.textoutline)
+	if option("showfontshadow") == true then
+		clvltxt:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		clvltxt:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end
+	
 	clvltxt:SetSize(220, 24)
 	clvltxt:SetJustifyH("CENTER")
     clvltxt:SetText(CharacterLevelText:GetText() or "")
@@ -166,6 +188,11 @@ function CCS:inspect()
 	local ilvltxt = _G["CompInspectLevelText"] or CCS_ic:CreateFontString("CompInspectLevelText")
     ilvltxt:SetPoint("TOP", ititname, "BOTTOM", 0, 0) 
     ilvltxt:SetFont(option("fontname_levelclass_inspect") or CCS.fontname, (option("fontsize_levelclass_inspect") or 12) , CCS.textoutline)
+	if option("showfontshadow") == true then
+		ilvltxt:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ilvltxt:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end
+	
 	ilvltxt:SetSize(220, 24)
 	ilvltxt:SetJustifyH("CENTER")
     ilvltxt:SetText(InspectLevelText:GetText() or "")
@@ -175,6 +202,11 @@ function CCS:inspect()
 	local Color = "a336ed"
     cilvltxt:SetPoint("TOP", clvltxt, "BOTTOM", 0 ,0) 
     cilvltxt:SetFont(option("fontname_cilvl") or CCS.fontname, (option("fontsize_cilvl") or 20) , CCS.textoutline)
+	if option("showfontshadow") == true then
+		cilvltxt:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		cilvltxt:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end
+	
 	cilvltxt:SetSize(230, 22*(option("fontsize_cilvl") or 20)/20)
 	cilvltxt:SetJustifyH("CENTER")
     CCS:GetAverageEquippedRarityHex("player")
@@ -193,7 +225,12 @@ function CCS:inspect()
     avgItemLevelEquipped = CCS.GetInspectItemLevel(unitinspect)
     Color = "a336ed"
     iilvltxt:SetPoint("TOP", ilvltxt, "BOTTOM", 0 ,0) 
-    iilvltxt:SetFont(option("fontname_inspect_ilvl") or CCS.fontname, option("fontsize_inspect_ilvl") or 20, "OUTLINE")
+    iilvltxt:SetFont(option("fontname_inspect_ilvl") or CCS.fontname, option("fontsize_inspect_ilvl") or 20, CCS.textoutline)
+	if option("showfontshadow") == true then
+		iilvltxt:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		iilvltxt:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end
+	
 	iilvltxt:SetSize(230, 22*(option("fontsize_inspect_ilvl") or 20)/20)
 	iilvltxt:SetJustifyH("CENTER")
     CCS:GetAverageEquippedRarityHex(unitinspect)
@@ -886,6 +923,11 @@ local function initializemplusplanelframe()
 	local ccsmi_fs2 = _G["ccsmi_fs2"] or  ccsmi_sf:CreateFontString("ccsmi_fs2")
 	ccsmi_fs2:SetPoint("TOP", sf_topbar, "BOTTOM", 0, -35);
 	ccsmi_fs2:SetFont(option("fontname_mplus_title") or CCS.fontname, (option("fontsize_mplus_title") or 16), CCS.textoutline);
+	if option("showfontshadow") == true then
+		ccsmi_fs2:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ccsmi_fs2:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end
+	
 	ccsmi_fs2:SetJustifyH("CENTER")
 	ccsmi_fs2:SetText(CCS.getraiderioscoreinspect())
 	ccsmi_fs2:Show()        
@@ -893,6 +935,11 @@ local function initializemplusplanelframe()
 	local ccsmi_fs3 = _G["ccsmi_fs3"] or  ccsmi_sf:CreateFontString("ccsmi_fs3")
 	ccsmi_fs3:SetPoint("TOPRIGHT", sf_topbar, "BOTTOMRIGHT", -10, -4);
 	ccsmi_fs3:SetFont(option("fontname_mplus_title") or CCS.fontname, (option("fontsize_mplus_title") or 12), CCS.textoutline);
+	if option("showfontshadow") == true then
+		ccsmi_fs3:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ccsmi_fs3:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end
+	
 	ccsmi_fs3:SetJustifyH("RIGHT")
 	ccsmi_fs3:SetText("")
 	ccsmi_fs3:Hide()       
@@ -947,6 +994,11 @@ local function initializemplusplanelframe()
 		local ccsmi_bx_btn2_fs = _G["ccsmi_b"..x.."_btn2_fs"] or ccsmi_bx_btn2:CreateFontString("ccsmi_b"..x.."_btn2_fs")
 		ccsmi_bx_btn2_fs:SetPoint("CENTER", ccsmi_bx_btn2, "CENTER",0 ,0);
 		ccsmi_bx_btn2_fs:SetFont(CCS.fontname, (option("fontsize") or 10), CCS.textoutline);
+		if option("showfontshadow") == true then
+			ccsmi_bx_btn2:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+			ccsmi_bx_btn2:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+		end
+		
 		ccsmi_bx_btn2_fs:SetJustifyH("CENTER")
 		ccsmi_bx_btn2_fs:Show()
 		
@@ -959,11 +1011,21 @@ local function initializemplusplanelframe()
 		local ccsmi_bx_fs1 = _G["ccsmi_b"..x.."_fs1"] or  ccsmi_bx:CreateFontString("ccsmi_b"..x.."_fs1") -- Over icon
 		ccsmi_bx_fs1:SetPoint("CENTER", ccsmi_bx_tex2, "CENTER", 0 ,0)
 		ccsmi_bx_fs1:SetFont(option("fontname_mplus_row") or CCS.fontname, (option("fontsize_mplus_row") or 18), CCS.textoutline)
+		if option("showfontshadow") == true then
+			ccsmi_bx_fs1:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+			ccsmi_bx_fs1:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+		end
+		
 		ccsmi_bx_fs1:Hide()
 		
 		local ccsmi_bx_fs2 = _G["ccsmi_b"..x.."_fs2"] or  ccsmi_bx:CreateFontString("ccsmi_b"..x.."_fs2") -- Dungeon Name
 		ccsmi_bx_fs2:SetPoint("LEFT", ccsmi_bx_tex2, "RIGHT", 10 ,0);
 		ccsmi_bx_fs2:SetFont(option("fontname_mplus_row") or CCS.fontname, (option("fontsize_mplus_row") or 14), CCS.textoutline);
+		if option("showfontshadow") == true then
+			ccsmi_bx_fs2:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+			ccsmi_bx_fs2:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+		end
+		
 		ccsmi_bx_fs2:SetSize(250, 45*height)
 		ccsmi_bx_fs2:SetJustifyH("LEFT")
 		ccsmi_bx_fs2:Show()
@@ -971,18 +1033,33 @@ local function initializemplusplanelframe()
 		local ccsmi_bx_fs3 = _G["ccsmi_b"..x.."_fs3"] or  ccsmi_bx:CreateFontString("ccsmi_b"..x.."_fs3") -- Level
 		ccsmi_bx_fs3:SetPoint("RIGHT", ccsmi_bx_tex2, "RIGHT", 325 ,0);
 		ccsmi_bx_fs3:SetFont(option("fontname_mplus_row") or CCS.fontname, (option("fontsize_mplus_row") or 14), CCS.textoutline);
+		if option("showfontshadow") == true then
+			ccsmi_bx_fs3:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+			ccsmi_bx_fs3:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+		end
+		
 		ccsmi_bx_fs3:SetJustifyH("RIGHT")
 		ccsmi_bx_fs3:Show()
 		
 		local ccsmi_bx_fs4 = _G["ccsmi_b"..x.."_fs4"] or  ccsmi_bx:CreateFontString("ccsmi_b"..x.."_fs4") -- Rating
 		ccsmi_bx_fs4:SetPoint("RIGHT", ccsmi_bx_tex2, "RIGHT", 400 ,0);
 		ccsmi_bx_fs4:SetFont(option("fontname_mplus_row") or CCS.fontname, (option("fontsize_mplus_row") or 14), CCS.textoutline);
+		if option("showfontshadow") == true then
+			ccsmi_bx_fs4:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+			ccsmi_bx_fs4:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+		end
+		
 		ccsmi_bx_fs4:SetJustifyH("RIGHT")
 		ccsmi_bx_fs4:Show()
 		
 		local ccsmi_bx_fs7 = _G["ccsmi_b"..x.."_fs7"] or  ccsmi_bx:CreateFontString("ccsmi_b"..x.."_fs7") -- Best
 		ccsmi_bx_fs7:SetPoint("LEFT", ccsmi_bx_tex2, "RIGHT", 435 ,0);
 		ccsmi_bx_fs7:SetFont(option("fontname_mplus_row") or CCS.fontname, (option("fontsize_mplus_row") or 14), CCS.textoutline);
+		if option("showfontshadow") == true then
+			ccsmi_bx_fs7:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+			ccsmi_bx_fs7:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+		end
+		
 		ccsmi_bx_fs7:SetJustifyH("RIGHT")
 		ccsmi_bx_fs7:Show()
 	end
@@ -999,6 +1076,11 @@ local function initializemplusplanelframe()
 	local ccsmi_headerlvl_fs = _G["ccsmi_headerlvl_fs"] or  ccsmi_sf:CreateFontString("ccsmi_headerlvl_fs")
 	ccsmi_headerlvl_fs:SetPoint("BOTTOMRIGHT", ccsmi_b1_fs3, "TOPRIGHT", 0 ,15)
 	ccsmi_headerlvl_fs:SetFont(option("fontname_mplus_header") or CCS.fontname, (option("fontsize_mplus_header") or 14), CCS.textoutline)
+	if option("showfontshadow") == true then
+		ccsmi_headerlvl_fs:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ccsmi_headerlvl_fs:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end
+	
 	ccsmi_headerlvl_fs:SetText(LEVEL)
     ccsmi_headerlvl_fs:SetTextColor(
         option("fontcolor_mplus_header")[1] or 1,
@@ -1011,6 +1093,11 @@ local function initializemplusplanelframe()
 	local ccsmi_header_fs = _G["ccsmi_header_fs"] or  ccsmi_sf:CreateFontString("ccsmi_header_fs")
 	ccsmi_header_fs:SetPoint("BOTTOMRIGHT", ccsmi_b1_fs4, "TOPRIGHT", 0 ,15)
 	ccsmi_header_fs:SetFont(option("fontname_mplus_header") or CCS.fontname, (option("fontsize_mplus_header") or 14), CCS.textoutline)
+	if option("showfontshadow") == true then
+		ccsmi_header_fs:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ccsmi_header_fs:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end
+	
 	ccsmi_header_fs:SetText(PVP_RATING_HEADER)
     ccsmi_header_fs:SetTextColor(
         option("fontcolor_mplus_header")[1] or 1,
@@ -1023,6 +1110,11 @@ local function initializemplusplanelframe()
 	local ccsmi_fbt_fs = _G["ccsmi_fbt_fs"] or  ccsmi_sf:CreateFontString("ccsmi_fbt_fs")
 	ccsmi_fbt_fs:SetPoint("BOTTOMLEFT", ccsmi_b1_fs7, "TOPLEFT", 0 ,15)
 	ccsmi_fbt_fs:SetFont(option("fontname_mplus_header") or CCS.fontname, (option("fontsize_mplus_header") or 14), CCS.textoutline)
+	if option("showfontshadow") == true then
+		ccsmi_fbt_fs:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ccsmi_fbt_fs:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end
+
 	ccsmi_fbt_fs:SetText(BEST)
     ccsmi_fbt_fs:SetTextColor(
         option("fontcolor_mplus_header")[1] or 1,
@@ -1035,6 +1127,11 @@ local function initializemplusplanelframe()
 	local ccsmi_tp_fs = _G["ccsmi_tp_fs"] or  ccsmi_sf:CreateFontString("ccsmi_tp_fs")
 	ccsmi_tp_fs:SetPoint("BOTTOMLEFT", ccsmi_b1_btn1, "TOPLEFT", 0 , 10)
 	ccsmi_tp_fs:SetFont(option("fontname_mplus_header") or CCS.fontname, (option("fontsize_mplus_header") or 14), CCS.textoutline)
+	if option("showfontshadow") == true then
+		ccsmi_tp_fs:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ccsmi_tp_fs:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end
+	
 	ccsmi_tp_fs:SetText("")
     ccsmi_tp_fs:SetTextColor(
         option("fontcolor_mplus_header")[1] or 1,
@@ -1060,6 +1157,10 @@ local function initmplusframe()
     btnfont1:SetPoint("TOPLEFT", InspectFrame, "TOPLEFT", 5, -5)
 	btnfont1:SetSize(150, 60)
     btnfont1:SetFont(option("fontname_inspect_mplus") or CCS.fontname, option("fontsize_inspect_mplus") or 11, CCS.textoutline)
+	if option("showfontshadow") == true then
+		btnfont1:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		btnfont1:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end
     btnfont1:SetText(textstring)
     
 ----
@@ -1288,6 +1389,11 @@ local function initclickframe()
     
     btnfont1:SetPoint("BOTTOM", btn, "TOP", -3 ,0)
     btnfont1:SetFont(CCS.fontname, 10, CCS.textoutline)
+	if option("showfontshadow") == true then
+		btnfont1:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		btnfont1:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	
+	
     btnfont1:SetText(textstring)
     btn:SetNormalTexture(texture)
     
@@ -1319,6 +1425,11 @@ local function initclickframe()
     
     btnfont1:SetPoint("BOTTOM", btn, "TOP", -3 ,0)
     btnfont1:SetFont(CCS.fontname, 10, CCS.textoutline)
+	if option("showfontshadow") == true then
+		btnfont1:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		btnfont1:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	
+	
     btnfont1:SetText(textstring)
     btn:SetNormalTexture(texture)
     
@@ -1389,7 +1500,12 @@ local function initializeinspectframe()
     InspectFrameTitleText:SetPoint("LEFT", InspectFrame, "LEFT", 50, 0)
     InspectFrameTitleText:SetPoint("RIGHT", InspectFrameInset, "RIGHT", -40, 0)
     
-    InspectFrameTitleText:SetFont(option("fontname_nametitle_inspect") or CCS.fontname, option("fontsize_nametitle_inspect") or 12, "OUTLINE")
+    InspectFrameTitleText:SetFont(option("fontname_nametitle_inspect") or CCS.fontname, option("fontsize_nametitle_inspect") or 12, CCS.textoutline)
+	if option("showfontshadow") == true then
+		InspectFrameTitleText:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		InspectFrameTitleText:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	
+	
     InspectFrameTitleText:SetTextColor(
         option("fontcolor_nametitle_inspect")[1] or 1,
         option("fontcolor_nametitle_inspect")[2] or 1,
@@ -1401,7 +1517,11 @@ local function initializeinspectframe()
     InspectLevelText:ClearAllPoints()
     InspectLevelText:SetPoint("TOP", InspectFrameTitleText, "BOTTOM", 0, -5)
     
-    InspectLevelText:SetFont(option("fontname_levelclass_inspect") or CCS.fontname, option("fontsize_levelclass_inspect") or 11, "OUTLINE")
+    InspectLevelText:SetFont(option("fontname_levelclass_inspect") or CCS.fontname, option("fontsize_levelclass_inspect") or 11, CCS.textoutline)
+	if option("showfontshadow") == true then
+		InspectLevelText:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		InspectLevelText:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	
     
     InspectFrame.NineSlice:ClearAllPoints()
     InspectFrame.NineSlice:SetPoint("TOPLEFT", InspectFrame, "TOPLEFT", 0, 0)
@@ -1573,7 +1693,12 @@ local function loopitems()
     color = CCS:GetAverageEquippedRarityHex(unit) or "ffffff"
     
     ilvlTxt:SetPoint("TOP", _G["InspectLevelText"], "BOTTOM", 0, -10) 
-    ilvlTxt:SetFont(option("fontname_inspect_ilvl") or CCS.fontname, option("fontsize_inspect_ilvl") or 20, "OUTLINE")
+    ilvlTxt:SetFont(option("fontname_inspect_ilvl") or CCS.fontname, option("fontsize_inspect_ilvl") or 20, CCS.textoutline)
+	if option("showfontshadow") == true then
+		ilvlTxt:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ilvlTxt:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end
+	
     
     ilvlTxt:SetText("|cFF".. color .. format("%.2f", iLvl or "") .. "|r")
     ilvlTxt:SetShown(option("showilvl_inspect"))
@@ -1581,17 +1706,119 @@ local function loopitems()
     initmplusframe()
     initclickframe()
 end 
+--[[
+-- One-time setup: reset guards when the tooltip opens/closes
+GameTooltip:HookScript("OnHide", function()
+    CCS.LastTooltipGUID = nil
+    CCS.IlvlLineIndex   = nil
+end)
+
+GameTooltip:HookScript("OnShow", function()
+    CCS.LastTooltipGUID = nil
+    CCS.IlvlLineIndex   = nil
+end)
+
+-- Helper to post-process unit tooltips
+local function SetTooltipUnit(tooltip, callback)
+    if TooltipDataProcessor then
+        TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Unit, function(self, ...)
+            if self == tooltip then
+                callback(self, ...)
+            end
+        end)
+    end
+end
+
+-- Throttle state
+local lastInspectTime = 0
+local INSPECT_COOLDOWN = 1.0  -- seconds
+
+-- One-time hook for GameTooltip
+SetTooltipUnit(GameTooltip, function()
+    local _, unit = TooltipUtil.GetDisplayedUnit(GameTooltip)
+    if unit and UnitIsPlayer(unit) then
+        local guid = UnitGUID(unit)
+        -- Only schedule if this is a new unit AND we’re off cooldown
+        if guid and guid ~= CCS.LastTooltipGUID and (GetTime() - lastInspectTime) > INSPECT_COOLDOWN then
+            CCS.LastTooltipGUID = guid
+            -- Small delay lets the tooltip stabilize and avoids rapid re-requests
+            C_Timer.After(0.2, function()
+                -- Re-validate before requesting (cursor may have moved)
+                local _, currentUnit = TooltipUtil.GetDisplayedUnit(GameTooltip)
+                if currentUnit and UnitIsPlayer(currentUnit) then
+                    local currentGUID = UnitGUID(currentUnit)
+                    if currentGUID == CCS.LastTooltipGUID and CanInspect(currentUnit) and (not InspectFrame or not InspectFrame:IsShown()) then
+                        lastInspectTime = GetTime()
+                        NotifyInspect(currentUnit)
+                    end
+                end
+            end)
+        end
+    end
+end)--]]
 
 -- Event handler for inspect sheet
 function CCS.InspectSheetEventHandler(event, ...)
-    local arg1 = ...
-    --if InCombatLockdown() then CCS.incombat = true return end
-	if CCS.GetCurrentVersion() ~= CCS.RETAIL then return end
+--[[
+	-- Spec + ilvl on tooltip when inspect data arrives
+	if event == "INSPECT_READY" and option("showilvl_spec_ontt") == true then
+		if TooltipUtil and GameTooltip then
+			local _, unit = TooltipUtil.GetDisplayedUnit(GameTooltip)
+			if unit and UnitIsPlayer(unit) then
+				local guid = UnitGUID(unit)
+
+				-- Guard: only add lines once per GUID
+				if CCS.LastTooltipGUID ~= guid then
+					CCS.LastTooltipGUID = guid
+					local _, class = UnitClass(unit)
+					local r, g, b = GetClassColor(class)
+					local specid = GetInspectSpecialization(unit)
+					local _, specname = GetSpecializationInfoByID(specid)
+					specname = WrapTextInColor(specname or "", CreateColor(r, g, b, 1))
+
+					GameTooltip:AddLine(" ")
+					GameTooltip:AddLine(string.format(PET_SPECIALIZATION_TEMPLATE, specname or ""), 1, 1, 1)
+
+					-- Add placeholder line and capture its index
+					GameTooltip:AddLine(ITEM_UPGRADE_STAT_AVERAGE_ITEM_LEVEL .. ": ...", 1, 1, 1)
+					CCS.IlvlLineIndex = GameTooltip:NumLines()
+
+					GameTooltip:Show()
+
+					-- Retry until ilvl is available
+					local retries = 10
+					local function updateIlvl()
+						if not CCS.IlvlLineIndex then return end
+						local ilvl = CCS.GetInspectItemLevel(unit)
+						if ilvl and ilvl > 0 then
+							local hexcolor = CCS:GetAverageEquippedRarityHex(unit)
+							local text = ITEM_UPGRADE_STAT_AVERAGE_ITEM_LEVEL .. ": " ..
+										 string.format("|cFF%s%.2f|r", hexcolor, ilvl)
+							local fs = _G["GameTooltipTextLeft" .. CCS.IlvlLineIndex]
+							if fs then
+								fs:SetText(text)
+								GameTooltip:Show()
+							end
+						else
+							retries = retries - 1
+							if retries > 0 then
+								C_Timer.After(0.2, updateIlvl)
+							end
+						end
+					end
+					updateIlvl()
+				end
+			end
+		end
+	end--]]
+
+    -- Retail-only inspect frame updates
+    if CCS.GetCurrentVersion() ~= CCS.RETAIL then return end
     if not InspectFrame or not InspectFrame.unit then return end
 
     if event == "CCS_EVENT_OPTIONS" then
         if not option("show_inspect") then
-           local msg = REQUIRES_RELOAD ..  ". (" .. SLASH_RELOAD1..")"
+            local msg = REQUIRES_RELOAD .. ". (" .. SLASH_RELOAD1 .. ")"
             print(msg)
             PlaySound(8959)
             RaidNotice_AddMessage(RaidBossEmoteFrame, msg, ChatTypeInfo["SYSTEM"])
@@ -1601,6 +1828,7 @@ function CCS.InspectSheetEventHandler(event, ...)
         initializemplusplanelframe()
         loopitems()
         return true
+
     elseif event == "INSPECT_READY" then
         if not CCS.inspectUpdatePending then
             CCS.inspectUpdatePending = true

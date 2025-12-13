@@ -270,10 +270,25 @@ local eventHandlers = {
         C_Timer.After(0.1, function()
             CCS:PrimeFontsAndTextures()
             CCS.fontname = CCS:GetDefaultFontForLocale() or CCS:GetOptionValue("default_font") or "Fonts\\FRIZQT__.TTF"
-            CCS.textoutline = "OUTLINE"
+            if CCS:GetOptionValue("textoutline") == "Thin Outline" then
+                CCS.textoutline = "OUTLINE"
+            elseif CCS:GetOptionValue("textoutline") == "Thick Outline" then
+                CCS.textoutline = "THICKOUTLINE"
+            else
+                CCS.textoutline = ""
+            end
+
         end)
         CCS.fontname = CCS:GetDefaultFontForLocale() or CCS:GetOptionValue("default_font") or "Fonts\\FRIZQT__.TTF"
-        CCS.textoutline = CCS:GetOptionValue("textoutline") or ""
+
+        if CCS:GetOptionValue("textoutline") == "Thin Outline" then
+            CCS.textoutline = "OUTLINE"
+        elseif CCS:GetOptionValue("textoutline") == "Thick Outline" then
+            CCS.textoutline = "THICKOUTLINE"
+        else
+            CCS.textoutline = ""
+        end
+
         for _, module in pairs(CCS.Modules) do
             if type(module.Initialize) == "function" then
                 C_Timer.After(0.1, function() module:Initialize() end)

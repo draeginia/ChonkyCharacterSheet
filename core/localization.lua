@@ -27,6 +27,11 @@ local defaultStrings = {
     ------------------------------------------------------------
     -- General / Common
     ------------------------------------------------------------
+	["Show Font Shadow"] = "Show Font Shadow", -- enUS / enGB
+	["Shadow Color"] = "Shadow Color", -- enUS / enGB
+	["Shadow X Offset"] = "Shadow X Offset", -- enUS / enGB
+	["Shadow Y Offset"] = "Shadow Y Offset", -- enUS / enGB
+	["Upgrade Color by Rarity"] = "Upgrade Color by Rarity",
 	["Apply Font to All"] = "Apply Font to All", -- enUS/enGB
 	["Show wowhead recommended secondary stat priority"] = "Show wowhead recommended secondary stat priority", -- enUS/enGB
 	["Secondary (Priority)"] = "Secondary (Priority)",
@@ -156,9 +161,9 @@ local defaultStrings = {
     ------------------------------------------------------------
     ["HEADER_FONT_SETTINGS"] = "Character Sheet Font Settings",
     ["TEXT_OUTLINE"] = "Text Outline",
-    ["TEXT_OUTLINE_NONE"] = "No Outline",
-    ["TEXT_OUTLINE_THIN"] = "Thin Outline",
-    ["TEXT_OUTLINE_THICK"] = "Thick Outline",
+    ["No Outline"] = "No Outline",
+    ["Thin Outline"] = "Thin Outline",
+    ["Thick Outline"] = "Thick Outline",
     ["FONT_NAME_NAMETITLE"] = "Character Name/Title Font",
     ["FONT_NAME_LEVELCLASS"] = "Level/Class Font",
     ["FONT_NAME_DURABILITY"] = "Durability Font",
@@ -286,6 +291,11 @@ if locale == "enGB" then
 elseif locale == "deDE" then
     localizedStrings = {
 		-- General / Common
+		["Show Font Shadow"] = "Schrift-Schatten anzeigen", -- deDE
+		["Shadow Color"] = "Schattenfarbe", -- deDE
+		["Shadow X Offset"] = "Schatten X-Versatz", -- deDE
+		["Shadow Y Offset"] = "Schatten Y-Versatz", -- deDE
+		["Upgrade Color by Rarity"] = "Farbige Aufwertung nach Seltenheit", -- deDE
 		["Apply Font to All"] = "Schriftart auf alle anwenden", -- deDE
 		["Show wowhead recommended secondary stat priority"] = "Zeige von Wowhead empfohlene sekundäre Wertepriorität", -- deDE
 		["ENCHANT_NAME_LENGTH"] = "Länge des Verzauberungsnamens", -- deDE
@@ -401,9 +411,9 @@ elseif locale == "deDE" then
 		-- Character Sheet Font Settings
 		["HEADER_FONT_SETTINGS"] = "Charakterübersicht: Schriftarteinstellungen",
 		["TEXT_OUTLINE"] = "Textumrandung",
-		["TEXT_OUTLINE_NONE"] = "Keine Umrandung",
-		["TEXT_OUTLINE_THIN"] = "Dünne Umrandung",
-		["TEXT_OUTLINE_THICK"] = "Dicke Umrandung",
+		["No Outline"] = "Keine Umrandung",
+		["Thin Outline"] = "Dünne Umrandung",
+		["Thick Outline"] = "Dicke Umrandung",
 		["FONT_NAME_NAMETITLE"] = "Schriftart für Charaktername/Titel",
 		["FONT_NAME_LEVELCLASS"] = "Schriftart für Level/Klasse",
 		["FONT_NAME_DURABILITY"] = "Schriftart für Haltbarkeit",
@@ -513,6 +523,11 @@ elseif locale == "deDE" then
 elseif locale == "frFR" then
     localizedStrings = {
 		-- General / Common
+		["Show Font Shadow"] = "Afficher l’ombre de police", -- frFR
+		["Shadow Color"] = "Couleur de l’ombre", -- frFR
+		["Shadow X Offset"] = "Décalage X de l’ombre", -- frFR
+		["Shadow Y Offset"] = "Décalage Y de l’ombre", -- frFR
+		["Upgrade Color by Rarity"] = "Couleur d'amélioration par rareté", -- frFR
 		["Apply Font to All"] = "Appliquer la police à tout", -- frFR
 		["ENCHANT_NAME_LENGTH"] = "Longueur du nom d'enchantement", -- frFR
 		["Show wowhead recommended secondary stat priority"] = "Afficher la priorité des statistiques secondaires recommandée par Wowhead", -- frFR
@@ -628,9 +643,9 @@ elseif locale == "frFR" then
 		-- Character Sheet Font Settings
 		["HEADER_FONT_SETTINGS"] = "Paramètres de police de la fiche de personnage",
 		["TEXT_OUTLINE"] = "Contour du texte",
-		["TEXT_OUTLINE_NONE"] = "Aucun contour",
-		["TEXT_OUTLINE_THIN"] = "Contour fin",
-		["TEXT_OUTLINE_THICK"] = "Contour épais",
+		["No Outline"] = "Aucun contour",
+		["Thin Outline"] = "Contour fin",
+		["Thick Outline"] = "Contour épais",
 		["FONT_NAME_NAMETITLE"] = "Police du nom/titre du personnage",
 		["FONT_NAME_LEVELCLASS"] = "Police du niveau/classe",
 		["FONT_NAME_DURABILITY"] = "Police de durabilité",
@@ -740,6 +755,11 @@ elseif locale == "frFR" then
 elseif locale == "esES" then
     localizedStrings = {
 		-- General / Common
+		["Show Font Shadow"] = "Mostrar sombra de fuente", -- esES / esMX
+		["Shadow Color"] = "Color de sombra", -- esES / esMX
+		["Shadow X Offset"] = "Desplazamiento X de sombra", -- esES / esMX
+		["Shadow Y Offset"] = "Desplazamiento Y de sombra", -- esES / esMX
+		["Upgrade Color by Rarity"] = "Color de mejora por rareza", -- esES / esMX
 		["Apply Font to All"] = "Aplicar fuente a todo", -- esES
 		["ENCHANT_NAME_LENGTH"] = "Longitud del nombre de encantamiento", -- esES
 		["Show wowhead recommended secondary stat priority"] = "Mostrar la prioridad de estadísticas secundarias recomendada por Wowhead", -- esES
@@ -855,9 +875,9 @@ elseif locale == "esES" then
 		-- Character Sheet Font Settings
 		["HEADER_FONT_SETTINGS"] = "Configuración de fuentes de la hoja de personaje",
 		["TEXT_OUTLINE"] = "Contorno del texto",
-		["TEXT_OUTLINE_NONE"] = "Sin contorno",
-		["TEXT_OUTLINE_THIN"] = "Contorno fino",
-		["TEXT_OUTLINE_THICK"] = "Contorno grueso",
+		["No Outline"] = "Sin contorno",
+		["Thin Outline"] = "Contorno fino",
+		["Thick Outline"] = "Contorno grueso",
 		["FONT_NAME_NAMETITLE"] = "Fuente para nombre/título del personaje",
 		["FONT_NAME_LEVELCLASS"] = "Fuente para nivel/clase",
 		["FONT_NAME_DURABILITY"] = "Fuente para durabilidad",
@@ -967,6 +987,11 @@ elseif locale == "esES" then
 elseif locale == "esMX" then
     localizedStrings = {
 		-- General / Common
+		["Show Font Shadow"] = "Mostrar sombra de fuente", -- esES / esMX
+		["Shadow Color"] = "Color de sombra", -- esES / esMX
+		["Shadow X Offset"] = "Desplazamiento X de sombra", -- esES / esMX
+		["Shadow Y Offset"] = "Desplazamiento Y de sombra", -- esES / esMX
+		["Upgrade Color by Rarity"] = "Color de mejora por rareza", -- esES / esMX
 	    ["Apply Font to All"] = "Aplicar fuente a todo", -- esMX
 		["ENCHANT_NAME_LENGTH"] = "Longitud del nombre de encantamiento", -- esMX
 		["Show wowhead recommended secondary stat priority"] = "Mostrar la prioridad de estadísticas secundarias recomendada por Wowhead", -- esMX
@@ -1082,9 +1107,9 @@ elseif locale == "esMX" then
 		-- Character Sheet Font Settings
 		["HEADER_FONT_SETTINGS"] = "Configuración de fuentes de la hoja de personaje",
 		["TEXT_OUTLINE"] = "Contorno del texto",
-		["TEXT_OUTLINE_NONE"] = "Sin contorno",
-		["TEXT_OUTLINE_THIN"] = "Contorno delgado",
-		["TEXT_OUTLINE_THICK"] = "Contorno grueso",
+		["No Outline"] = "Sin contorno",
+		["Thin Outline"] = "Contorno delgado",
+		["Thick Outline"] = "Contorno grueso",
 		["FONT_NAME_NAMETITLE"] = "Fuente para nombre/título del personaje",
 		["FONT_NAME_LEVELCLASS"] = "Fuente para nivel/clase",
 		["FONT_NAME_DURABILITY"] = "Fuente para durabilidad",
@@ -1194,6 +1219,11 @@ elseif locale == "esMX" then
 elseif locale == "ruRU" then
     localizedStrings = {
 		-- General / Common
+		["Show Font Shadow"] = "Показать тень шрифта", -- ruRU
+		["Shadow Color"] = "Цвет тени", -- ruRU
+		["Shadow X Offset"] = "Смещение тени по X", -- ruRU
+		["Shadow Y Offset"] = "Смещение тени по Y", -- ruRU
+		["Upgrade Color by Rarity"] = "Цвет улучшения по редкости", -- ruRU
 		["Apply Font to All"] = "Применить шрифт ко всем", -- ruRU
 		["ENCHANT_NAME_LENGTH"] = "Длина названия чар", -- ruRU		
 		["Show wowhead recommended secondary stat priority"] = "Показать рекомендуемый Wowhead приоритет вторичных характеристик", -- ruRU
@@ -1309,9 +1339,9 @@ elseif locale == "ruRU" then
 		-- Character Sheet Font Settings
 		["HEADER_FONT_SETTINGS"] = "Настройки шрифтов листа персонажа",
 		["TEXT_OUTLINE"] = "Контур текста",
-		["TEXT_OUTLINE_NONE"] = "Без контура",
-		["TEXT_OUTLINE_THIN"] = "Тонкий контур",
-		["TEXT_OUTLINE_THICK"] = "Толстый контур",
+		["No Outline"] = "Без контура",
+		["Thin Outline"] = "Тонкий контур",
+		["Thick Outline"] = "Толстый контур",
 		["FONT_NAME_NAMETITLE"] = "Шрифт имени/титула персонажа",
 		["FONT_NAME_LEVELCLASS"] = "Шрифт уровня/класса",
 		["FONT_NAME_DURABILITY"] = "Шрифт прочности",
@@ -1421,6 +1451,11 @@ elseif locale == "ruRU" then
 elseif locale == "koKR" then
     localizedStrings = {
 		-- General / Common
+		["Show Font Shadow"] = "글꼴 그림자 표시", -- koKR
+		["Shadow Color"] = "그림자 색상", -- koKR
+		["Shadow X Offset"] = "그림자 X 오프셋", -- koKR
+		["Shadow Y Offset"] = "그림자 Y 오프셋", -- koKR
+		["Upgrade Color by Rarity"] = "등급별 강화 색상", -- koKR
 		["Apply Font to All"] = "모든 항목에 글꼴 적용", -- koKR
 		["ENCHANT_NAME_LENGTH"] = "마법부여 이름 길이", -- koKR
 		["Show wowhead recommended secondary stat priority"] = "와우헤드 추천 보조 능력치 우선순위 표시", -- koKR
@@ -1536,9 +1571,9 @@ elseif locale == "koKR" then
 		-- Character Sheet Font Settings
 		["HEADER_FONT_SETTINGS"] = "캐릭터 시트 글꼴 설정",
 		["TEXT_OUTLINE"] = "텍스트 외곽선",
-		["TEXT_OUTLINE_NONE"] = "없음",
-		["TEXT_OUTLINE_THIN"] = "얇은 외곽선",
-		["TEXT_OUTLINE_THICK"] = "두꺼운 외곽선",
+		["No Outline"] = "없음",
+		["Thin Outline"] = "얇은 외곽선",
+		["Thick Outline"] = "두꺼운 외곽선",
 		["FONT_NAME_NAMETITLE"] = "캐릭터 이름/칭호 글꼴",
 		["FONT_NAME_LEVELCLASS"] = "레벨/직업 글꼴",
 		["FONT_NAME_DURABILITY"] = "내구도 글꼴",
@@ -1648,6 +1683,11 @@ elseif locale == "koKR" then
 elseif locale == "zhCN" then
     localizedStrings = {
 		-- General / Common
+		["Show Font Shadow"] = "显示字体阴影", -- zhCN
+		["Shadow Color"] = "阴影颜色", -- zhCN
+		["Shadow X Offset"] = "阴影 X 偏移", -- zhCN
+		["Shadow Y Offset"] = "阴影 Y 偏移", -- zhCN
+		["Upgrade Color by Rarity"] = "升级颜色（按稀有度）", -- zhCN
 		["Apply Font to All"] = "应用字体到全部", -- zhCN
 		["ENCHANT_NAME_LENGTH"] = "附魔名称长度", -- zhCN
 		["Show wowhead recommended secondary stat priority"] = "显示 Wowhead 推荐的副属性优先级", -- zhCN
@@ -1763,9 +1803,9 @@ elseif locale == "zhCN" then
 		-- Character Sheet Font Settings
 		["HEADER_FONT_SETTINGS"] = "角色面板字体设置",
 		["TEXT_OUTLINE"] = "文字描边",
-		["TEXT_OUTLINE_NONE"] = "无描边",
-		["TEXT_OUTLINE_THIN"] = "细描边",
-		["TEXT_OUTLINE_THICK"] = "粗描边",
+		["No Outline"] = "无描边",
+		["Thin Outline"] = "细描边",
+		["Thick Outline"] = "粗描边",
 		["FONT_NAME_NAMETITLE"] = "角色名称/头衔字体",
 		["FONT_NAME_LEVELCLASS"] = "等级/职业字体",
 		["FONT_NAME_DURABILITY"] = "耐久度字体",
@@ -1875,6 +1915,10 @@ elseif locale == "zhCN" then
 elseif locale == "zhTW" then
     localizedStrings = {
 		-- General / Common
+		["Show Font Shadow"] = "顯示字體陰影", -- zhTW
+		["Shadow Color"] = "陰影顏色", -- zhTW
+		["Shadow X Offset"] = "陰影 X 位移", -- zhTW
+		["Shadow Y Offset"] = "陰影 Y 位移", -- zhTW		["Upgrade Color by Rarity"] = "升級顏色（依稀有度）", -- zhTW
 		["Apply Font to All"] = "套用字型到全部", -- zhTW
 		["ENCHANT_NAME_LENGTH"] = "附魔名稱長度", -- zhTW
 		["Show wowhead recommended secondary stat priority"] = "顯示 Wowhead 推薦的副屬性優先順序", -- zhTW
@@ -1990,9 +2034,9 @@ elseif locale == "zhTW" then
 		-- Character Sheet Font Settings
 		["HEADER_FONT_SETTINGS"] = "角色面板字型設定",
 		["TEXT_OUTLINE"] = "文字描邊",
-		["TEXT_OUTLINE_NONE"] = "無描邊",
-		["TEXT_OUTLINE_THIN"] = "細描邊",
-		["TEXT_OUTLINE_THICK"] = "粗描邊",
+		["No Outline"] = "無描邊",
+		["Thin Outline"] = "細描邊",
+		["Thick Outline"] = "粗描邊",
 		["FONT_NAME_NAMETITLE"] = "角色名稱/頭銜字型",
 		["FONT_NAME_LEVELCLASS"] = "等級/職業字型",
 		["FONT_NAME_DURABILITY"] = "耐久度字型",
@@ -2102,6 +2146,11 @@ elseif locale == "zhTW" then
 elseif locale == "ptBR" then
     localizedStrings = {
 		-- General / Common
+		["Show Font Shadow"] = "Mostrar sombra da fonte", -- ptBR
+		["Shadow Color"] = "Cor da sombra", -- ptBR
+		["Shadow X Offset"] = "Deslocamento X da sombra", -- ptBR
+		["Shadow Y Offset"] = "Deslocamento Y da sombra", -- ptBR
+		["Upgrade Color by Rarity"] = "Cor da melhoria por raridade", -- ptBR
 		["Apply Font to All"] = "Aplicar fonte a tudo", -- ptBR
 		["ENCHANT_NAME_LENGTH"] = "Comprimento do nome do encantamento", -- ptBR
 		["Show wowhead recommended secondary stat priority"] = "Mostrar a prioridade de atributos secundários recomendada pelo Wowhead", -- ptBR
@@ -2217,9 +2266,9 @@ elseif locale == "ptBR" then
 		-- Character Sheet Font Settings
 		["HEADER_FONT_SETTINGS"] = "Configurações de fontes da folha de personagem",
 		["TEXT_OUTLINE"] = "Contorno do texto",
-		["TEXT_OUTLINE_NONE"] = "Sem contorno",
-		["TEXT_OUTLINE_THIN"] = "Contorno fino",
-		["TEXT_OUTLINE_THICK"] = "Contorno grosso",
+		["No Outline"] = "Sem contorno",
+		["Thin Outline"] = "Contorno fino",
+		["Thick Outline"] = "Contorno grosso",
 		["FONT_NAME_NAMETITLE"] = "Fonte para nome/título do personagem",
 		["FONT_NAME_LEVELCLASS"] = "Fonte para nível/classe",
 		["FONT_NAME_DURABILITY"] = "Fonte para durabilidade",
@@ -2329,6 +2378,11 @@ elseif locale == "ptBR" then
 elseif locale == "itIT" then
     localizedStrings = {
 		-- General / Common
+		["Show Font Shadow"] = "Mostra ombra del carattere", -- itIT
+		["Shadow Color"] = "Colore dell’ombra", -- itIT
+		["Shadow X Offset"] = "Offset X dell’ombra", -- itIT
+		["Shadow Y Offset"] = "Offset Y dell’ombra", -- itIT
+		["Upgrade Color by Rarity"] = "Colore di potenziamento per rarità", -- itIT
 		["Apply Font to All"] = "Applica carattere a tutto", -- itIT
 		["ENCHANT_NAME_LENGTH"] = "Lunghezza nome incantamento", -- itIT
 		["Show wowhead recommended secondary stat priority"] = "Mostra la priorità delle statistiche secondarie consigliata da Wowhead", -- itIT
@@ -2444,9 +2498,9 @@ elseif locale == "itIT" then
 		-- Character Sheet Font Settings
 		["HEADER_FONT_SETTINGS"] = "Impostazioni dei font della scheda personaggio",
 		["TEXT_OUTLINE"] = "Contorno del testo",
-		["TEXT_OUTLINE_NONE"] = "Nessuno",
-		["TEXT_OUTLINE_THIN"] = "Contorno sottile",
-		["TEXT_OUTLINE_THICK"] = "Contorno spesso",
+		["No Outline"] = "Nessuno",
+		["Thin Outline"] = "Contorno sottile",
+		["Thick Outline"] = "Contorno spesso",
 		["FONT_NAME_NAMETITLE"] = "Font per nome/titolo del personaggio",
 		["FONT_NAME_LEVELCLASS"] = "Font per livello/classe",
 		["FONT_NAME_DURABILITY"] = "Font per durabilità",

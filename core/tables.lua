@@ -1,7 +1,7 @@
 local addonName, ns = ...
 local L = ns.L  -- grab the localization table
 local CCS = ns.CCS
-
+local locale = GetLocale()
 local _, _, _, tocversion = GetBuildInfo()
 CCS.tocversion = tocversion
 CCS.expansionID = GetExpansionLevel()
@@ -65,7 +65,6 @@ CCS.Throttles = {
 }
 
 function CCS:GetDefaultFontForLocale()
-    local locale = GetLocale()
 
 --Testing info
 --locale = "enUS" --	English (United States) enGB clients return enUS
@@ -162,7 +161,13 @@ ns.optionDefs = {
                     CCS.InitializeModules()
                 end
             end},
-
+    { type="divider", cat="GENERAL", ver=bit.bor(CCS.ALL), slots=4 },
+    { type="checkbox", cat="GENERAL", ver=bit.bor(CCS.ALL), key="showfontshadow", label=L["Show Font Shadow"], value=false, default=false, slots=1 },
+    { type="color", cat="GENERAL", ver=bit.bor(CCS.ALL), key="fontshadowcolor", label=L["Shadow Color"], value={0,0,0,1}, default={0,0,0,1}, slots=1 },
+    { type="slider", cat="GENERAL", ver=bit.bor(CCS.ALL), key="fontshadowx", label=L["Shadow X Offset"], value=0, default=0, min=-15, max=15, step=1, slots=1 },
+    { type="slider", cat="GENERAL", ver=bit.bor(CCS.ALL), key="fontshadowy", label=L["Shadow Y Offset"], value=0, default=0, min=-15, max=15, step=1, slots=1 },
+    { type="dropdown", cat="GENERAL", ver=bit.bor(CCS.ALL), key="textoutline", label=L["TEXT_OUTLINE"], value="Thin Outline", default="Thin Outline", values={"No Outline", "Thin Outline", "Thick Outline"}, slots=2 },
+    
     -- Character Sheet General Display Settings
     { type="divider", cat="CHAR-SHEET", ver=bit.bor(CCS.ALL), slots=4 },
     { type="header", cat="CHAR-SHEET", ver=bit.bor(CCS.ALL), key=nil, label=L["HEADER_GENERAL_DISPLAY"], slots=4, color={0.7, 0.5, 1.0}, fontSize=20, fontOutline="THICKOUTLINE" },
@@ -185,7 +190,8 @@ ns.optionDefs = {
     { type="checkbox", cat="CHAR-SHEET", ver=bit.bor(CCS.ALL), key="showpvpilvl", label=L["SHOW_PVP_ILVL"], value=true, default=true, slots=1 },
     { type="checkbox", cat="CHAR-SHEET", ver=bit.bor(CCS.ALL), key="showitemcolor", label=L["SHOW_ITEM_COLOR_BG"], value=true, default=true, slots=1 },
     { type="checkbox", cat="CHAR-SHEET", ver=bit.bor(CCS.ALL), key="showitemupgrade", label=L["SHOW_ITEM_UPGRADE"], value=true, default=true, slots=1 },
-    { type="color", cat="CHAR-SHEET", ver=bit.bor(CCS.ALL), key="itemupgradecolor", label=L["ITEM_UPGRADE_COLOR"], value={0.98,0.60,0.35,1}, default={0.98,0.60,0.35,1}, slots=2 },
+    { type="checkbox", cat="CHAR-SHEET", ver=bit.bor(CCS.ALL), key="upgradecolorrarity", label=L["Upgrade Color by Rarity"], value=false, default=false, slots=1 },
+    { type="color", cat="CHAR-SHEET", ver=bit.bor(CCS.ALL), key="itemupgradecolor", label=L["ITEM_UPGRADE_COLOR"], value={0.98,0.60,0.35,1}, default={0.98,0.60,0.35,1}, slots=1 },
     { type="checkbox", cat="CHAR-SHEET", ver=bit.bor(CCS.ALL), key="showenchantgemerrors", label=L["SHOW_ENCHANT_GEM_ERRORS"], value=true, default=true, slots=1 },
     { type="checkbox", cat="CHAR-SHEET", ver=bit.bor(CCS.ALL), key="showsetitems", label=L["SHOW_SET_ITEMS"], value=true, default=true, slots=1 },
     { type="color", cat="CHAR-SHEET", ver=bit.bor(CCS.ALL), key="setitemcolor", label=L["SET_ITEM_COLOR"], value={0.05,0.75,0.45,1}, default={0.05,0.75,0.45,1}, slots=1 },
@@ -1589,7 +1595,7 @@ CCS.Dungeon_Teleports = {
     [559]= { spellID = 1254563}, -- Nexus Point Xenas
     [560]= { spellID = 1254559}, -- Maisara Caverns
     --Placeholder for: Den of Nalorakk
-    --Placeholder for:Muder Row
+    --Placeholder for:Murder Row
     --Placeholder for:The Blinding Vale
     --Placeholder for:Voidscar Arena
     
@@ -2115,5 +2121,96 @@ CCS.ClassSpecStatPriority = {
             [61] = {4,2,1,3}, -- Mountain Thane
             [62] = {4,2,1,3}, -- Colossus
         },
+    },
+}
+
+CCS.UpgradeTrackNames = {
+    enUS = {
+        ["Explorer"]   = {0.62, 0.62, 0.62, 1}, -- Grey
+        ["Adventurer"] = {1.00, 1.00, 1.00, 1}, -- White
+        ["Veteran"]    = {0.12, 1.00, 0.00, 1}, -- Green
+        ["Champion"]   = {0.00, 0.44, 0.87, 1}, -- Blue
+        ["Hero"]       = {1, .3, 1, 1}, -- Purple
+        ["Myth"]       = {1.00, 0.50, 0.00, 1}, -- Orange
+    },
+    esES = {
+        ["Expedicionario"] = {0.62, 0.62, 0.62, 1},
+        ["Aventurero"]     = {1.00, 1.00, 1.00, 1},
+        ["Veterano"]       = {0.12, 1.00, 0.00, 1},
+        ["Campeón"]        = {0.00, 0.44, 0.87, 1},
+        ["Héroe"]          = {1, .3, 1, 1},
+        ["Mito"]           = {1.00, 0.50, 0.00, 1},
+    },
+    esMX = {
+        ["Expedicionario"] = {0.62, 0.62, 0.62, 1},
+        ["Aventurero"]     = {1.00, 1.00, 1.00, 1},
+        ["Veterano"]       = {0.12, 1.00, 0.00, 1},
+        ["Campeón"]        = {0.00, 0.44, 0.87, 1},
+        ["Héroe"]          = {1, .3, 1, 1},
+        ["Mito"]           = {1.00, 0.50, 0.00, 1},
+    },    
+    deDE = {
+        ["Forscher"]   = {0.62, 0.62, 0.62, 1},
+        ["Abenteurer"] = {1.00, 1.00, 1.00, 1},
+        ["Veteran"]    = {0.12, 1.00, 0.00, 1},
+        ["Champion"]   = {0.00, 0.44, 0.87, 1},
+        ["Held"]       = {1, .3, 1, 1},
+        ["Mythos"]     = {1.00, 0.50, 0.00, 1},
+    },
+    frFR = {
+        ["Explorateur"] = {0.62, 0.62, 0.62, 1},
+        ["Aventurier"]  = {1.00, 1.00, 1.00, 1},
+        ["Vétéran"]     = {0.12, 1.00, 0.00, 1},
+        ["Champion"]    = {0.00, 0.44, 0.87, 1},
+        ["Héros"]       = {1, .3, 1, 1},
+        ["Mythe"]       = {1.00, 0.50, 0.00, 1},
+    },
+    itIT = {
+        ["Esploratore"]   = {0.62, 0.62, 0.62, 1},
+        ["Avventuriero"]  = {1.00, 1.00, 1.00, 1},
+        ["Veterano"]      = {0.12, 1.00, 0.00, 1},
+        ["Campione"]      = {0.00, 0.44, 0.87, 1},
+        ["Eroe"]          = {1, .3, 1, 1},
+        ["Mito"]          = {1.00, 0.50, 0.00, 1},
+    },
+    ptBR = {
+        ["Explorador"]  = {0.62, 0.62, 0.62, 1},
+        ["Aventureiro"] = {1.00, 1.00, 1.00, 1},
+        ["Veterano"]    = {0.12, 1.00, 0.00, 1},
+        ["Campeão"]     = {0.00, 0.44, 0.87, 1},
+        ["Herói"]       = {1, .3, 1, 1},
+        ["Mito"]        = {1.00, 0.50, 0.00, 1},
+    },
+    ruRU = {
+        ["Исследователь"]          = {0.62, 0.62, 0.62, 1},
+        ["Искатель приключений"]   = {1.00, 1.00, 1.00, 1},
+        ["Ветеран"]                = {0.12, 1.00, 0.00, 1},
+        ["Защитник"]               = {0.00, 0.44, 0.87, 1},
+        ["Герой"]                  = {1, .3, 1, 1},
+        ["Легенда"]                = {1.00, 0.50, 0.00, 1},
+    },
+    koKR = {
+        ["탐험가"] = {0.62, 0.62, 0.62, 1},
+        ["모험가"] = {1.00, 1.00, 1.00, 1},
+        ["노련가"] = {0.12, 1.00, 0.00, 1},
+        ["챔피언"] = {0.00, 0.44, 0.87, 1},
+        ["영웅"]   = {1, .3, 1, 1},
+        ["신화"]   = {1.00, 0.50, 0.00, 1},
+    },
+    zhCN = {
+        ["探索者"] = {0.62, 0.62, 0.62, 1},
+        ["冒险者"] = {1.00, 1.00, 1.00, 1},
+        ["老兵"]   = {0.12, 1.00, 0.00, 1},
+        ["勇士"]   = {0.00, 0.44, 0.87, 1},
+        ["英雄"]   = {1, .3, 1, 1},
+        ["神话"]   = {1.00, 0.50, 0.00, 1},
+    },
+    zhTW = {
+        ["探險者"] = {0.62, 0.62, 0.62, 1},
+        ["冒險者"] = {1.00, 1.00, 1.00, 1},
+        ["精兵"]   = {0.12, 1.00, 0.00, 1},
+        ["勇士"]   = {0.00, 0.44, 0.87, 1},
+        ["英雄"]   = {1, .3, 1, 1},
+        ["神話"]   = {1.00, 0.50, 0.00, 1},
     },
 }

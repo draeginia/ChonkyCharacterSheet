@@ -118,6 +118,11 @@ local function CreateHeaderRow(raidData, anchor, parent, rowHeight)
 	local ccsrf_rx_fs1 = _G["ccsrf_r"..raidID.."_fs1"] or  ccsrf_rx:CreateFontString("ccsrf_r"..raidID.."_fs1")
 	ccsrf_rx_fs1:SetPoint("LEFT", ccsrf_rx, "LEFT", 10 ,0);
 	ccsrf_rx_fs1:SetFont(option("fontname_raidtitle") or CCS.fontname, (option("fontsize_raidtitle") or 20), CCS.textoutline);
+	if option("showfontshadow") == true then
+		ccsrf_rx_fs1:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ccsrf_rx_fs1:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	                                                
+	
 	ccsrf_rx_fs1:SetSize(5*rowHeight, rowHeight)
 	ccsrf_rx_fs1:SetJustifyH("LEFT")
 	ccsrf_rx_fs1:SetText(string.format("%s",raidData.title))
@@ -127,6 +132,11 @@ local function CreateHeaderRow(raidData, anchor, parent, rowHeight)
 	local ccsrf_rx_fs2 = _G["ccsrf_r"..raidID.."_fs2"] or  ccsrf_rx:CreateFontString("ccsrf_r"..raidID.."_fs2")
 	ccsrf_rx_fs2:SetPoint("LEFT", ccsrf_rx, "LEFT", (2*rowHeight)+205 ,0);
 	ccsrf_rx_fs2:SetFont(option("fontname_raiddiff") or CCS.fontname, (option("fontsize_raiddiff") or 18), CCS.textoutline);
+	if option("showfontshadow") == true then
+		ccsrf_rx_fs2:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ccsrf_rx_fs2:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	                                                
+	
     ccsrf_rx_fs2:SetSize(200, rowHeight)
 	ccsrf_rx_fs2:SetJustifyH("CENTER")
 	ccsrf_rx_fs2:SetText(string.format("|cff1eff00%s %s|r\n(%s/%s)",PLAYER_DIFFICULTY1, KILLS, normal, raidData.num_bosses))
@@ -136,6 +146,11 @@ local function CreateHeaderRow(raidData, anchor, parent, rowHeight)
 	local ccsrf_rx_fs3 = _G["ccsrf_r"..raidID.."_fs3"] or  ccsrf_rx:CreateFontString("ccsrf_r"..raidID.."_fs3")
 	ccsrf_rx_fs3:SetPoint("LEFT", ccsrf_rx, "LEFT", (2*rowHeight)+385 ,0);
 	ccsrf_rx_fs3:SetFont(option("fontname_raiddiff") or CCS.fontname, (option("fontsize_raiddiff") or 18), CCS.textoutline);
+	if option("showfontshadow") == true then
+		ccsrf_rx_fs3:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ccsrf_rx_fs3:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	                                                
+	
     ccsrf_rx_fs3:SetSize(200, rowHeight)
 	ccsrf_rx_fs3:SetJustifyH("CENTER")
 	ccsrf_rx_fs3:SetText(string.format("|cff0070dd%s %s|r\n(%s/%s)",PLAYER_DIFFICULTY2, KILLS, heroic, raidData.num_bosses))
@@ -145,6 +160,11 @@ local function CreateHeaderRow(raidData, anchor, parent, rowHeight)
 	local ccsrf_rx_fs4 = _G["ccsrf_r"..raidID.."_fs4"] or  ccsrf_rx:CreateFontString("ccsrf_r"..raidID.."_fs4")
 	ccsrf_rx_fs4:SetPoint("LEFT", ccsrf_rx, "LEFT", (2*rowHeight)+545 ,0);
 	ccsrf_rx_fs4:SetFont(option("fontname_raiddiff") or CCS.fontname, (option("fontsize_raiddiff") or 18), CCS.textoutline);
+	if option("showfontshadow") == true then
+		ccsrf_rx_fs4:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ccsrf_rx_fs4:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	                                                
+	
     ccsrf_rx_fs4:SetSize(200, rowHeight)
 	ccsrf_rx_fs4:SetJustifyH("CENTER")
 	ccsrf_rx_fs4:SetText(string.format("|cffa335ee%s %s|r\n(%s/%s)",PLAYER_DIFFICULTY6, KILLS, mythic, raidData.num_bosses))
@@ -186,6 +206,11 @@ local function CreateBossRow(bossData, anchor, parent, rowHeight, rowCount)
 	local ccsrf_bx_fs1 = _G["ccsrf_b"..bossID.."_fs1"] or  ccsrf_bx:CreateFontString("ccsrf_b"..bossID.."_fs1")
 	ccsrf_bx_fs1:SetPoint("LEFT", ccsrf_bx_tex2, "RIGHT", 10 ,0);
 	ccsrf_bx_fs1:SetFont(option("fontname_raidboss") or CCS.fontname, (option("fontsize_raidboss") or 14), CCS.textoutline);
+	if option("showfontshadow") == true then
+		ccsrf_bx_fs1:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ccsrf_bx_fs1:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	                                                
+	
 	ccsrf_bx_fs1:SetSize(5*rowHeight, rowHeight)
 	ccsrf_bx_fs1:SetJustifyH("LEFT")
 	ccsrf_bx_fs1:SetText(string.format("%s",bossData.name))
@@ -195,6 +220,11 @@ local function CreateBossRow(bossData, anchor, parent, rowHeight, rowCount)
 	local ccsrf_bx_fs2 = _G["ccsrf_b"..bossID.."_fs2"] or  ccsrf_bx:CreateFontString("ccsrf_b"..bossID.."_fs2")
 	ccsrf_bx_fs2:SetPoint("LEFT", ccsrf_bx_tex2, "RIGHT", 275 ,0);
 	ccsrf_bx_fs2:SetFont(option("fontname_raidboss") or CCS.fontname, (option("fontsize_raidboss") or 14), CCS.textoutline);
+	if option("showfontshadow") == true then
+		ccsrf_bx_fs2:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ccsrf_bx_fs2:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	                                                
+	
     ccsrf_bx_fs2:SetSize(50, rowHeight)
 	ccsrf_bx_fs2:SetJustifyH("CENTER")
 
@@ -207,6 +237,11 @@ local function CreateBossRow(bossData, anchor, parent, rowHeight, rowCount)
 	local ccsrf_bx_fs3 = _G["ccsrf_b"..bossID.."_fs3"] or  ccsrf_bx:CreateFontString("ccsrf_b"..bossID.."_fs3")
 	ccsrf_bx_fs3:SetPoint("LEFT", ccsrf_bx_tex2, "RIGHT", 455 ,0);
 	ccsrf_bx_fs3:SetFont(option("fontname_raidboss") or CCS.fontname, (option("fontsize_raidboss") or 14), CCS.textoutline);
+	if option("showfontshadow") == true then
+		ccsrf_bx_fs3:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ccsrf_bx_fs3:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	                                                
+	
     ccsrf_bx_fs3:SetSize(50, rowHeight)
 	ccsrf_bx_fs3:SetJustifyH("CENTER")
     
@@ -219,6 +254,11 @@ local function CreateBossRow(bossData, anchor, parent, rowHeight, rowCount)
 	local ccsrf_bx_fs4 = _G["ccsrf_b"..bossID.."_fs4"] or  ccsrf_bx:CreateFontString("ccsrf_b"..bossID.."_fs4")
 	ccsrf_bx_fs4:SetPoint("LEFT", ccsrf_bx_tex2, "RIGHT", 615 ,0);
 	ccsrf_bx_fs4:SetFont(option("fontname_raidboss") or CCS.fontname, (option("fontsize_raidboss") or 14), CCS.textoutline);
+	if option("showfontshadow") == true then
+		ccsrf_bx_fs4:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		ccsrf_bx_fs4:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	                                                
+	
     ccsrf_bx_fs4:SetSize(50, rowHeight)
 	ccsrf_bx_fs4:SetJustifyH("CENTER")
     
@@ -291,6 +331,11 @@ function module:Initialize()
     
     btnfont1:SetPoint("RIGHT", ccsr_btn, "RIGHT", -3 ,0)
     btnfont1:SetFont(option("fontname_raid") or CCS.fontname, (option("fontsize_raid") or 11), CCS.textoutline)
+	if option("showfontshadow") == true then
+		btnfont1:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+		btnfont1:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+	end	                                                
+	
     btnfont1:SetText(textstring)
     btnfont1:SetJustifyH("RIGHT")
 
