@@ -995,8 +995,8 @@ local function initializemplusplanelframe()
 		ccsmi_bx_btn2_fs:SetPoint("CENTER", ccsmi_bx_btn2, "CENTER",0 ,0);
 		ccsmi_bx_btn2_fs:SetFont(CCS.fontname, (option("fontsize") or 10), CCS.textoutline);
 		if option("showfontshadow") == true then
-			ccsmi_bx_btn2:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
-			ccsmi_bx_btn2:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
+			ccsmi_bx_btn2_fs:SetShadowColor(unpack(option("fontshadowcolor") or {0,0,0,1}))
+			ccsmi_bx_btn2_fs:SetShadowOffset(option("fontshadowx") or 0, option("fontshadowy") or 0)
 		end
 		
 		ccsmi_bx_btn2_fs:SetJustifyH("CENTER")
